@@ -1,1 +1,1 @@
-rootProject.name = "CarSharing"
+rootProject.name = "car-sharing-backend"
