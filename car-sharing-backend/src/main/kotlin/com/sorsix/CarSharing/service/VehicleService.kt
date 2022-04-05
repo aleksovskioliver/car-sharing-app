@@ -7,6 +7,7 @@ import com.sorsix.CarSharing.domain.exception.VehicleNotFound
 import com.sorsix.CarSharing.repository.UserRepository
 import com.sorsix.CarSharing.repository.VehicleRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import java.lang.Exception
 
@@ -16,7 +17,8 @@ class VehicleService(
     val vehicleRepository: VehicleRepository) {
 
     fun createVehicle(newVehicle: CreateVehicleRequest): Vehicle{
-        val driver: User = userRepository.findByIdOrNull(newVehicle.driverId) ?: throw Exception()
+        val userName = SecurityContextHolder.getContext().authentication.name
+        val driver = userRepository.findByEmail(userName)!!
         return vehicleRepository.save(Vehicle(0,newVehicle.model,newVehicle.make,newVehicle.seats,driver))
     }
 

@@ -50,18 +50,9 @@ class ReservationService(
         val customer = userRepository.findByEmail(userName)!!
         val reservationList = reservation.customers
         reservationList.add(customer)
-        return reservationRepository.save(
-            Reservation(
-                reservation.id,
-                reservation.driver,
-                reservationList,
-                reservation.startTime,
-                reservation.endTime,
-                reservation.pickupLocation,
-                reservation.dropoutLocation,
-                reservation.tripCost,
-                reservation.status,
-                reservation.availableSeats - 1
+        return reservationRepository.save(Reservation(reservation.id,reservation.driver, reservationList,
+                reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
+                reservation.tripCost, reservation.status, reservation.availableSeats - 1
             )
         )
     }

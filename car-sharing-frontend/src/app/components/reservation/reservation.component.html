@@ -1,1 +1,8 @@
-<h2></h2>
+<ul class="list-group">
+    <li *ngFor="let reservation of reservations" class="list-group-item">
+        <p>{{reservation.startTime}}</p>
+        <p>{{reservation.endTime}}</p>
+        <p>{{reservation.pickupLocation}}</p>
+        <p>{{reservation.tripCost}}</p>
+    </li>
+</ul>
