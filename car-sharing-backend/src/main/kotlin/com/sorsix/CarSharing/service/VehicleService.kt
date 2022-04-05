@@ -20,6 +20,8 @@ class VehicleService(
         return vehicleRepository.save(Vehicle(0,newVehicle.model,newVehicle.make,newVehicle.seats,driver))
     }
 
+    fun getAllVehicles() = vehicleRepository.findAll()
+
     fun getVehicle(id: Long): Vehicle {
         return vehicleRepository.findByIdOrNull(id) ?: throw VehicleNotFound("Vehicle with id $id is not found")
     }
