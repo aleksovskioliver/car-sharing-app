@@ -8,6 +8,7 @@ import com.sorsix.CarSharing.repository.LocationRepository
 import com.sorsix.CarSharing.repository.UserRepository
 import com.sorsix.CarSharing.repository.ReservationRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -29,33 +30,24 @@ class ReservationService(
     }
 
     fun createReservation(newReservationRequest: CreateReservationRequest): Reservation {
-        val driver = userRepository.findByIdOrNull(newReservationRequest.driverId)
-            ?: throw Exception() //throw UserNotFoundException("User with username $username is not found")
-//        val userName = SecurityContextHolder.getContext().authentication.name
-//        val driver = userRepository.findByEmail(userName) ?: throw Exception()
+        val userName = SecurityContextHolder.getContext().authentication.name
+        val driver = userRepository.findByEmail(userName)!!
         val startTime = LocalDateTime.parse(newReservationRequest.startTime, formatter)
         val endTime = LocalDateTime.parse(newReservationRequest.endTime, formatter)
         val pickupLocation = locationRepository.findByCity(newReservationRequest.pickupLocation)
         val dropoutLocation = locationRepository.findByCity(newReservationRequest.dropoutLocation)
         return reservationRepository.save(
             Reservation(
-                0,
-                driver,
-                customers = mutableListOf<User>(),
-                startTime = startTime,
-                endTime = endTime,
-                pickupLocation = pickupLocation,
-                dropoutLocation = dropoutLocation,
-                availableSeats = newReservationRequest.availableSeats,
-                status = ReservationStatus.ACTIVE,
-                tripCost = newReservationRequest.tripCost
+                0, driver, mutableListOf<User>(), startTime, endTime, pickupLocation, dropoutLocation,
+                newReservationRequest.availableSeats, ReservationStatus.ACTIVE, newReservationRequest.tripCost
             )
         )
     }
 
     fun addCustomerToReservation(addNewCustomer: addCustomerToReservation): Reservation {
         val reservation = reservationRepository.findByIdOrNull(addNewCustomer.reservationId) ?: throw Exception()
-        val customer = userRepository.findByIdOrNull(addNewCustomer.customerId) ?: throw Exception()
+        val userName = SecurityContextHolder.getContext().authentication.name
+        val customer = userRepository.findByEmail(userName)!!
         val reservationList = reservation.customers
         reservationList.add(customer)
         return reservationRepository.save(
