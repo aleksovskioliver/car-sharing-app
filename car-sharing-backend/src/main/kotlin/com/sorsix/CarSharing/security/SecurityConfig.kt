@@ -32,12 +32,15 @@ class SecurityConfig(val myUsersService: MyUsersService, val jwtRequestFilter: J
     override fun configure(http: HttpSecurity?) {
         http?.cors()?.and()?.csrf()?.disable()
             ?.authorizeRequests()
-            ?.antMatchers("/api/reservation/create")?.hasAnyRole("DRIVER")
+//            ?.antMatchers("/api/reservation/create")?.hasAnyRole("DRIVER")
             ?.antMatchers("/api/vehicle/create")?.hasAnyRole("DRIVER")
-            ?.antMatchers("/api/reservation/addCustomer")?.hasAnyRole("DRIVER","CUSTOMER")
+//            ?.antMatchers("/api/reservation/addCustomer")?.hasAnyRole("DRIVER","CUSTOMER")
+//            ?.antMatchers("/api/reservation/findAll")?.permitAll()
+            ?.antMatchers("/api/reservation/**")?.permitAll()
             ?.antMatchers("/api/user/create")?.permitAll()
             ?.antMatchers("/api/location/create")?.permitAll()
             ?.antMatchers("/authenticate")?.permitAll()
+            ?.antMatchers("/api/vehicle")?.permitAll()
             ?.and()
             ?.sessionManagement()?.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
