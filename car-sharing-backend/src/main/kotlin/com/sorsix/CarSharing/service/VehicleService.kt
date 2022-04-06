@@ -30,7 +30,6 @@ class VehicleService(
 
     fun getVehicleForUser(driver: User): Vehicle{
         return vehicleRepository.findByDriver(driver)
-
     }
 
     fun deleteVehicle(id: Long){
