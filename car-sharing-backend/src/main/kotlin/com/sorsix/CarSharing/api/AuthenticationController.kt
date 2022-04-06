@@ -8,10 +8,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
+@CrossOrigin
 @RestController
 class AuthenticationController(
     private val myUsersService: MyUsersService,
@@ -25,8 +27,8 @@ class AuthenticationController(
             this.authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(authenticationRequest.email, authenticationRequest.password)
             )
-        } catch (exception: BadCredentialsException) {
-            throw Exception("Incorrect username or password", exception)
+        } catch (exception: Exception) {
+            return ResponseEntity.badRequest().body("Invalid username or password")
         }
 
         val userDetails = this.myUsersService.loadUserByUsername(authenticationRequest.email)

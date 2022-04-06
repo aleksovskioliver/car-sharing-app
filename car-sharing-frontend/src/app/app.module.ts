@@ -10,9 +10,11 @@ import { AppComponent } from './app.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
+
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { MapComponent } from './components/map/map.component';
     RegisterComponent,
     FooterComponent,
     HeaderComponent,
-    MapComponent
+    MapComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
