@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { ReactiveFormsModule } from '@angular/forms';
 import {GoogleMapsModule} from '@angular/google-maps'
+import { CalendarModule } from '@syncfusion/ej2-angular-calendars';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -34,7 +36,8 @@ import { PhoneMaskDirective } from './directives/phone-mask.directive';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    CalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
