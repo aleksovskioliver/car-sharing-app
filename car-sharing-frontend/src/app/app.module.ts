@@ -15,6 +15,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
 import { LoginComponent } from './components/login/login.component';
+import { PhoneMaskDirective } from './directives/phone-mask.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoginComponent } from './components/login/login.component';
     FooterComponent,
     HeaderComponent,
     MapComponent,
-    LoginComponent
+    LoginComponent,
+    PhoneMaskDirective
   ],
   imports: [
     BrowserModule,
