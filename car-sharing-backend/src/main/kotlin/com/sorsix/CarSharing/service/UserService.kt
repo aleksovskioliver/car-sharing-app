@@ -22,7 +22,7 @@ class UserService(
     fun getUser(id: Long) = userRepository.findById(id)
 
     fun createUser(newUser: CreateUserRequest): User {
-        val role: Role = if (newUser.role == "ROLE_DRIVER") {
+        val role: Role = if (newUser.role.contains("driver", true)) {
             Role.ROLE_DRIVER
         } else {
             Role.ROLE_CUSTOMER
