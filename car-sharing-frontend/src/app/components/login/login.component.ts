@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   submitted = false
-  errorMessage = false
+  errorMessage = ''
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]]
@@ -31,14 +31,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true
-    this.errorMessage = false
+    this.errorMessage = ''
 
-    if (this.form.invalid) {
-      return;
+    if (this.form.valid) {
+      this.auth.loginUser(this.form.value).subscribe({
+        next: () => this.router.navigateByUrl("/"),
+        error: error => {
+          this.errorMessage = error
+        }
+      })
     }
-
-    this.auth.loginUser(this.form.value)
-    this.router.navigateByUrl("/")
   }
 
 }
