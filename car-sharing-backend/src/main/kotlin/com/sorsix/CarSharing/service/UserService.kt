@@ -3,6 +3,7 @@ package com.sorsix.CarSharing.service
 import com.sorsix.CarSharing.api.request.CreateUserRequest
 import com.sorsix.CarSharing.domain.Role
 import com.sorsix.CarSharing.domain.User
+import com.sorsix.CarSharing.domain.exception.UserAlreadyExists
 import com.sorsix.CarSharing.repository.UserRepository
 import com.sorsix.CarSharing.repository.VehicleRepository
 import org.slf4j.Logger
@@ -19,9 +20,17 @@ class UserService(
 
     val logger: Logger = LoggerFactory.getLogger(UserService::class.java)
 
-    fun getUser(id: Long) = userRepository.findById(id)
+    fun getUserById(id: Long) = userRepository.findById(id)
+
+    fun getUserByEmail(email: String): User? {
+        return userRepository.findByEmail(email)
+    }
+
 
     fun createUser(newUser: CreateUserRequest): User {
+        if(getUserByEmail(newUser.email) != null) {
+            throw UserAlreadyExists("User already exists")
+        }
         val role: Role = if (newUser.role.contains("driver", true)) {
             Role.ROLE_DRIVER
         } else {

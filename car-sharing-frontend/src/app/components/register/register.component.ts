@@ -3,7 +3,6 @@ import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from 'src/app/providers/custom-validators';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +11,7 @@ import { User } from 'src/app/models/User';
 })
 export class RegisterComponent implements OnInit {
 
+  errorMessage = ''
   submitted = false;
   form = this.formBuilder.group({
     firstname: ['', Validators.required],
@@ -46,6 +46,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.errorMessage = ''
     this.submitted = true
 
     if (this.form.invalid) {
@@ -66,7 +67,10 @@ export class RegisterComponent implements OnInit {
       next: () => {
         this.router.navigateByUrl('/login')
       },
-      error: error => console.log("Error", error)
+      error: error => {
+        this.errorMessage = error.error
+        console.log("Error", error)
+      }
     })
   }
 }

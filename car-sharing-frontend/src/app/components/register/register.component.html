@@ -77,10 +77,10 @@
                 <input id="driver" type="radio" value="driver" name="role" formControlName="role">
                 <label for="driver">Driver</label>
             </div>
+        </div>
 
-            <!-- <div *ngIf="isSet && myForm.invalid">
-                Please select one option
-            </div> -->
+        <div *ngIf="errorMessage !== ''" class="alert alert-danger" role="alert">
+            {{ errorMessage }}
         </div>
 
         <div class="form-group">
