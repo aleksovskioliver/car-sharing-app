@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private auth: AuthService) { }
+    private auth: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -35,13 +37,8 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.auth.loginUser(this.form.value).subscribe({
-      next: data => console.log(data),
-      error: error => {
-        console.log(error)
-        this.errorMessage = true
-      }
-    })
+    this.auth.loginUser(this.form.value)
+    this.router.navigateByUrl("/")
   }
 
 }

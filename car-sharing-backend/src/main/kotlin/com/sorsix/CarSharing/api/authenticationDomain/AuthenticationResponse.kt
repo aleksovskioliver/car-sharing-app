@@ -1,3 +1,5 @@
 package com.sorsix.CarSharing.api.authenticationDomain
 
-data class AuthenticationResponse(val jwt: String)
+import java.util.Date
+
+data class AuthenticationResponse(val jwt: String, val expiresIn: Date)
