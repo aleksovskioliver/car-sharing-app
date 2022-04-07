@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { AuthenticationRequest } from '../models/AuthenticationRequest';
 import { User } from '../models/User';
 
@@ -17,19 +18,18 @@ export class AuthService {
   }
 
   loginUser(req: AuthenticationRequest) {
-    return this.http.post(`${this.url}/authenticate`, req).subscribe({
-      next: res => {
-        this.setSession(res)
-        console.log(res)
-      }
-    })
-  }
-
-  private setSession(authResult: any) {
-    localStorage.setItem('id_token', authResult.jwt);
+    return this.http.post(`${this.url}/authenticate`, req).pipe(
+      tap(it => this.setSession(it)),
+      catchError(error => throwError(() => new Error(error.error)))
+    )
+    
   }
 
   logout() {
     localStorage.removeItem("id_token");
+  }
+
+  private setSession(authResult: any) {
+    localStorage.setItem('id_token', authResult.jwt);
   }
 }

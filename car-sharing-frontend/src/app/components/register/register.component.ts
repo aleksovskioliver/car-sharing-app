@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CustomValidators } from 'src/app/providers/custom-validators';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/User';
@@ -35,7 +35,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void { }
@@ -62,7 +63,9 @@ export class RegisterComponent implements OnInit {
     }
 
     this.auth.registerUser(user).subscribe({
-      next: data => console.log(data),
+      next: () => {
+        this.router.navigateByUrl('/login')
+      },
       error: error => console.log("Error", error)
     })
   }
