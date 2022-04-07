@@ -5,8 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {GoogleMapsModule} from '@angular/google-maps'
 import { CalendarModule } from '@syncfusion/ej2-angular-calendars';
 
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
