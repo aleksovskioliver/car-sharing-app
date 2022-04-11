@@ -9,7 +9,5 @@ data class Vehicle(
     val id: Long,
     val model: String,
     val make: String,
-    val seats: Int,
-    @OneToOne(mappedBy = "vehicle")
-    val driver: User
+    val seats: Int
 )

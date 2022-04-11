@@ -5,7 +5,6 @@ import com.sorsix.CarSharing.domain.Role
 import com.sorsix.CarSharing.domain.User
 import com.sorsix.CarSharing.domain.exception.UserAlreadyExists
 import com.sorsix.CarSharing.repository.UserRepository
-import com.sorsix.CarSharing.repository.VehicleRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -31,11 +30,6 @@ class UserService(
         if(getUserByEmail(newUser.email) != null) {
             throw UserAlreadyExists("User already exists")
         }
-        val role: Role = if (newUser.role.contains("driver", true)) {
-            Role.ROLE_DRIVER
-        } else {
-            Role.ROLE_CUSTOMER
-        }
 
         val user = User(
             0,
@@ -44,26 +38,17 @@ class UserService(
             newUser.phoneNumber,
             newUser.email,
             passwordEncoder.encode(newUser.password),
-            role
+            if(newUser.role.contains("driver"))
+                Role.ROLE_DRIVER
+            else
+                Role.ROLE_CUSTOMER
         )
         logger.info("[{}]", user)
 
+        if(user.role == Role.ROLE_DRIVER)
+            user.vehicle = vehicleService.createVehicle(newUser.vehicle!!)
+
         return userRepository.save(user)
-    }
-
-    private fun createDriver(newDriver: CreateUserRequest): User {
-        val driver = User(
-            0,
-            newDriver.firstName,
-            newDriver.lastName,
-            newDriver.phoneNumber,
-            newDriver.email,
-            passwordEncoder.encode(newDriver.password),
-            Role.ROLE_DRIVER,
-            vehicle = newDriver.vehicle
-        )
-
-        TODO()
     }
 
 }
