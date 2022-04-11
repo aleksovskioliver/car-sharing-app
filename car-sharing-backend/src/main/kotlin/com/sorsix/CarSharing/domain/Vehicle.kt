@@ -10,6 +10,6 @@ data class Vehicle(
     val model: String,
     val make: String,
     val seats: Int,
-    @OneToOne
+    @OneToOne(mappedBy = "vehicle")
     val driver: User
 )

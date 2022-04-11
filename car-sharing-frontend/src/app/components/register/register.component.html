@@ -79,6 +79,28 @@
             </div>
         </div>
 
+        <ng-container *ngIf="f['role'].value == 'driver'">
+            <h3>Enter vehicle</h3>
+
+            <div class="form-group">
+                <label>Model</label>
+                <input type="text" formControlName="model" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['model'].errors }" />
+            </div>
+
+            <div class="form-group">
+                <label>Make</label>
+                <input type="text" formControlName="make" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['make'].errors }" />
+            </div>
+
+            <div class="form-group">
+                <label>Seats</label>
+                <input type="text" formControlName="seats" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['seats'].errors }" />
+            </div>
+        </ng-container>
+
         <div *ngIf="errorMessage !== ''" class="alert alert-danger" role="alert">
             {{ errorMessage }}
         </div>

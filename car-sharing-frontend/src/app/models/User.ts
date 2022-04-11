@@ -1,3 +1,5 @@
+import { Vehicle } from "./Vehicle";
+
 export interface User {
     firstName: string;
     lastName: string;
@@ -5,4 +7,5 @@ export interface User {
     email: string;
     password: string;
     role: string;
+    vehicle: Vehicle | null
 }

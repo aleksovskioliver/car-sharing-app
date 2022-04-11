@@ -16,5 +16,7 @@ data class User(
     @Enumerated(EnumType.STRING)
     val role: Role,
     @ManyToMany(mappedBy = "customers")
-    val reservation: MutableList<Reservation>? = null
+    val reservation: MutableList<Reservation>? = null,
+    @OneToOne
+    var vehicle: Vehicle? = null
 )

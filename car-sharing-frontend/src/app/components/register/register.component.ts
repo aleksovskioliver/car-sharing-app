@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/User';
 import { CustomValidators } from 'src/app/providers/custom-validators';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -27,11 +28,13 @@ export class RegisterComponent implements OnInit {
       ]
     ],
     confirmPassword: ['', Validators.required],
-    role: ['rider', [Validators.required]]
+    role: ['rider', [Validators.required]],
+    model: ['', [CustomValidators.vehicleRequiredValidator]],
+    make: ['', [CustomValidators.vehicleRequiredValidator]],
+    seats: ['', [CustomValidators.vehicleRequiredValidator]]
   }, {
     validator: CustomValidators.mustMatch('password', 'confirmPassword')
   });
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,7 +42,19 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.form.get('role')!.valueChanges
+      .subscribe(value => {
+        if(value == 'rider') { 
+          this.form.get('model')?.setValue('')
+          this.form.get('make')?.setValue('')
+          this.form.get('seats')?.setValue('')
+        }
+        this.form.get('model')?.updateValueAndValidity();
+        this.form.get('make')?.updateValueAndValidity();
+        this.form.get('seats')?.updateValueAndValidity();
+      });
+  }
 
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
@@ -54,14 +69,20 @@ export class RegisterComponent implements OnInit {
     }
 
     const data = this.form.value
-    const user = {
+    const user: User = {
       firstName: data.firstname,
       lastName: data.lastname,
       phoneNumber: data.phonenumber,
       email: data.email,
       password: data.password,
-      role: data.role
+      role: data.role,
+      vehicle: data.role == 'driver' ? {
+        model: data.model,
+        make: data.make,
+        seats: data.seats
+      } : null
     }
+    console.log(user)
 
     this.auth.registerUser(user).subscribe({
       next: () => {

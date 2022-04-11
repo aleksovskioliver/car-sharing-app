@@ -1,25 +1,13 @@
 import {
     AbstractControl,
     ValidatorFn,
-    FormGroup
+    FormGroup,
+    Validators
 } from '@angular/forms';
 
 export class CustomValidators {
     constructor() { }
 
-    static onlyChar(): ValidatorFn {
-        return (control: AbstractControl): { [key: string]: boolean } | null => {
-            if (control.value == '') return null;
-
-            let re = new RegExp('^[a-zA-Z ]*$');
-            if (re.test(control.value)) {
-                return null;
-            } else {
-                return { onlyChar: true };
-            }
-        };
-    }
-    
     static mustMatch(controlName: string, matchingControlName: string) {
         return (formGroup: FormGroup) => {
             const control = formGroup.controls[controlName];
@@ -37,5 +25,17 @@ export class CustomValidators {
             }
             return null;
         };
+    }
+
+    static vehicleRequiredValidator(formControl: AbstractControl) {
+        if (!formControl.parent) {
+            return null;
+        }
+
+        if (formControl.parent.get('role')!.value == 'driver') {
+            return Validators.required(formControl);
+        }
+
+        return null;
     }
 }

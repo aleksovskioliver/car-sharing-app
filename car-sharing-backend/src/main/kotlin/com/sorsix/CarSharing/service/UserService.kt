@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     val userRepository: UserRepository,
-    val vehicleRepository: VehicleRepository,
+    val vehicleService: VehicleService,
     val passwordEncoder: PasswordEncoder
 ) {
 
@@ -50,4 +50,20 @@ class UserService(
 
         return userRepository.save(user)
     }
+
+    private fun createDriver(newDriver: CreateUserRequest): User {
+        val driver = User(
+            0,
+            newDriver.firstName,
+            newDriver.lastName,
+            newDriver.phoneNumber,
+            newDriver.email,
+            passwordEncoder.encode(newDriver.password),
+            Role.ROLE_DRIVER,
+            vehicle = newDriver.vehicle
+        )
+
+        TODO()
+    }
+
 }
