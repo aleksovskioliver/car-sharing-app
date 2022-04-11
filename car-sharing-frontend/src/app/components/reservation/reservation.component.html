@@ -1,7 +1,7 @@
 <ul class="list-group">
     <li *ngFor="let r of reservations" class="list-group-item">
       <p><span>{{r.startTime}}  -  {{r.endTime}}</span></p>
-      <p><span>{{r.pickupLocation.city}}  -  {{r.dropoutLocation.country}}</span></p>
+      <p><span>{{r.pickupLocation.city}}  -  {{r.dropoutLocation.city}}</span></p>
       <p><span>{{r.tripCost}}</span></p>
       <p><span>{{r.availableSeats}}</span></p>
     </li>

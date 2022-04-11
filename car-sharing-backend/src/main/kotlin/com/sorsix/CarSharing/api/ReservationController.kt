@@ -12,9 +12,19 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/reservation")
 class ReservationController(private val reservationService: ReservationService) {
 
-    @GetMapping("/findAll")
-    fun getAllReservations(): List<Reservation> {
-        return reservationService.getReservations()
+    @GetMapping
+    fun getAllReservations(@RequestParam(required = false) pickupCity: String?,
+                           @RequestParam(required = false) dropoutCity:String?)
+    : List<Reservation> {
+        return if (pickupCity != null && (dropoutCity == null || dropoutCity != "")){
+            reservationService.filterReservationByPickupLocation(pickupCity)
+        } else if((pickupCity == null || pickupCity == "") && dropoutCity != null){
+            reservationService.filterReservationByDropoutLocation(dropoutCity)
+        } else if((pickupCity != null || pickupCity == "") && (dropoutCity != null || dropoutCity == "")){
+            reservationService.filterReservationByPickupLocationAndDropoutLocation(pickupCity,dropoutCity)
+        }else{
+            reservationService.getReservations()
+        }
     }
 
     @GetMapping("/find/{id}")

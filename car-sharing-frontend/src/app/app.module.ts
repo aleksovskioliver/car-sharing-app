@@ -16,6 +16,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { MapComponent } from './components/map/map.component';
 import { LoginComponent } from './components/login/login.component';
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { PhoneMaskDirective } from './directives/phone-mask.directive';
     HeaderComponent,
     MapComponent,
     LoginComponent,
-    PhoneMaskDirective
+    PhoneMaskDirective,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

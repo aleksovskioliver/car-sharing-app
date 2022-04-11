@@ -61,4 +61,19 @@ class ReservationService(
         val reservation = reservationRepository.findByIdOrNull(id) ?: throw Exception()
         reservationRepository.delete(reservation)
     }
+
+    fun filterReservationByPickupLocation(city: String): List<Reservation>{
+        val pickupLocation = locationRepository.findByCity(city)
+        return reservationRepository.findAllByPickupLocation(pickupLocation)
+    }
+    fun filterReservationByDropoutLocation(city: String): List<Reservation>{
+        val pickupLocation = locationRepository.findByCity(city)
+        return reservationRepository.findALlByDropoutLocation(pickupLocation)
+    }
+
+    fun filterReservationByPickupLocationAndDropoutLocation(pickupCity: String,dropoutCity:String): List<Reservation>{
+        val pickupLocation = locationRepository.findByCity(pickupCity)
+        val dropoutLocation = locationRepository.findByCity(dropoutCity)
+        return reservationRepository.findAllByPickupLocationAndDropoutLocation(pickupLocation,dropoutLocation)
+    }
 }
