@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { ReactiveFormsModule } from '@angular/forms';
 import {GoogleMapsModule} from '@angular/google-maps'
 import { CalendarModule } from '@syncfusion/ej2-angular-calendars';
@@ -17,6 +17,8 @@ import { MapComponent } from './components/map/map.component';
 import { LoginComponent } from './components/login/login.component';
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { SearchComponent } from './components/search/search.component';
+import { ReservationFormComponent } from './components/reservation-form/reservation-form.component';
+import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { SearchComponent } from './components/search/search.component';
     MapComponent,
     LoginComponent,
     PhoneMaskDirective,
-    SearchComponent
+    SearchComponent,
+    ReservationFormComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,7 @@ import { SearchComponent } from './components/search/search.component';
     GoogleMapsModule,
     CalendarModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

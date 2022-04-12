@@ -21,8 +21,7 @@ export class AuthService {
     return this.http.post(`${this.url}/authenticate`, req).pipe(
       tap(it => this.setSession(it)),
       catchError(error => throwError(() => new Error(error.error)))
-    )
-    
+    )    
   }
 
   logout() {

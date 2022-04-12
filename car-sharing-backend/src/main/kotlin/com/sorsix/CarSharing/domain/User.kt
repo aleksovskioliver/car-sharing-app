@@ -1,5 +1,6 @@
 package com.sorsix.CarSharing.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -16,6 +17,7 @@ data class User(
     @Enumerated(EnumType.STRING)
     val role: Role,
     @ManyToMany(mappedBy = "customers")
+    @JsonIgnore
     val reservation: MutableList<Reservation>? = null,
     @OneToOne
     var vehicle: Vehicle? = null
