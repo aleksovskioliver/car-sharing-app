@@ -18,7 +18,7 @@ data class User(
     val role: Role,
     @ManyToMany(mappedBy = "customers")
     @JsonIgnore
-    val reservation: MutableList<Reservation>? = null,
+    val reservation: MutableList<Reservation> = mutableListOf(),
     @OneToOne
     var vehicle: Vehicle? = null
 )

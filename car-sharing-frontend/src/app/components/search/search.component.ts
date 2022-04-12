@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { Reservation } from 'src/app/models/Reservation';
 import { ReservationService } from 'src/app/services/reservation.service';
@@ -17,7 +17,6 @@ export class SearchComponent implements OnInit {
   searchField2 = new FormControl('');
 
   constructor(private service: ReservationService,
-    private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {

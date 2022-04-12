@@ -1,7 +1,6 @@
 package com.sorsix.CarSharing.service
 
 import com.sorsix.CarSharing.api.request.CreateReservationRequest
-import com.sorsix.CarSharing.api.request.addCustomerToReservation
 import com.sorsix.CarSharing.domain.*
 import com.sorsix.CarSharing.domain.exception.ReservationNotFound
 import com.sorsix.CarSharing.repository.LocationRepository
@@ -39,22 +38,24 @@ class ReservationService(
         return reservationRepository.save(
             Reservation(
                 0, driver, mutableListOf<User>(), startTime, endTime, pickupLocation, dropoutLocation,
-                newReservationRequest.availableSeats, ReservationStatus.ACTIVE, newReservationRequest.tripCost
+                newReservationRequest.tripCost, ReservationStatus.ACTIVE, newReservationRequest.availableSeats
             )
         )
     }
 
-    fun addCustomerToReservation(addNewCustomer: addCustomerToReservation): Reservation {
-        val reservation = reservationRepository.findByIdOrNull(addNewCustomer.reservationId) ?: throw Exception()
+    fun addCustomerToReservation(reservationId: Long): Reservation {
+        val reservation = reservationRepository.findByIdOrNull(reservationId) ?: throw Exception()
         val userName = SecurityContextHolder.getContext().authentication.name
         val customer = userRepository.findByEmail(userName)!!
         val reservationList = reservation.customers
         reservationList.add(customer)
-        return reservationRepository.save(Reservation(reservation.id,reservation.driver, reservationList,
+        val savedReservation: Reservation =  reservationRepository.save(Reservation(reservation.id,reservation.driver, reservationList,
                 reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
                 reservation.tripCost, reservation.status, reservation.availableSeats - 1
             )
         )
+        customer.reservation.add(savedReservation)
+        return savedReservation
     }
 
     fun deleteReservation(id: Long) {

@@ -4,12 +4,12 @@ import { Reservation } from '../models/Reservation';
 import { Observable, tap } from 'rxjs';
 import { MyLocation } from '../models/MyLocation';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
 
-  url = 'http://localhost:8080/api'
 
   constructor(private http: HttpClient) {
     console.log('ReservationService constructor')
@@ -28,6 +28,10 @@ export class ReservationService {
    }
 
    getLocations(): Observable<MyLocation[]> {
-      return this.http.get<MyLocation[]>(`${this.url}/getLocations`)
+      return this.http.get<MyLocation[]>(`http://localhost:8080/api/getLocations`)
+   } 
+
+   addCustomerToReservation(id: number){
+      this.http.post(`http://localhost:8080/api/reservation/addCustomer/${id}`,id).subscribe(it => {});
    }
 }
