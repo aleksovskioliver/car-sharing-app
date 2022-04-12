@@ -8,5 +8,6 @@ export interface Reservation{
     pickupLocation: MyLocation,
     dropoutLocation: MyLocation,
     tripCost: number,
+    status: string
     availableSeats: number
 }

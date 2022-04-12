@@ -10,7 +10,6 @@ import { MyLocation } from '../models/MyLocation';
 })
 export class ReservationService {
 
-
   constructor(private http: HttpClient) {
     console.log('ReservationService constructor')
    }
@@ -33,5 +32,9 @@ export class ReservationService {
 
    addCustomerToReservation(id: number){
       this.http.post(`http://localhost:8080/api/reservation/addCustomer/${id}`,id).subscribe(it => {});
+   }
+
+   getReservationById(id: number){
+     return this.http.get<Reservation>(`http://localhost:8080/api/reservation/find/${id}`);
    }
 }

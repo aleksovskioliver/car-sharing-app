@@ -4,6 +4,7 @@
       <p><span>{{r.pickupLocation.city}}  -  {{r.dropoutLocation.city}}</span></p>
       <p><span>{{r.tripCost}}</span></p>
       <p><span>Available seats: {{r.availableSeats}}</span></p>
-      <button type="submit" (click)="reserved(r.id)">RESERVE</button> -->
+      <p><span>STATUS: {{r.status}}</span></p>
+      <button type="submit" (click)="reserved(r.id)" >RESERVE</button>
     </li>
 </ul>
