@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MyLocation } from 'src/app/models/MyLocation';
+import { ReservationDTO } from 'src/app/models/ReservationDTO';
 import { ReservationService } from 'src/app/services/reservation.service';
 
 @Component({
@@ -41,8 +42,18 @@ export class ReservationFormComponent implements OnInit {
     if (this.reservationForm.invalid) {
       return;
     }
+    const data = this.reservationForm.value
+    const reservation: ReservationDTO = {
+      startTime: data.startTime,
+      endTime: data.endTime,
+      pickupLocation: data.pickupCity.city,
+      dropoutLocation: data.dropoffCity.city,
+      tripCost: data.price,
+      availableSeats: data.availableSeats
+    }
 
-    console.log(this.reservationForm.value)
+    this.reservationService.createReservation(reservation)
+    console.log(reservation)
   }
 
   changeCity(e: any) {
