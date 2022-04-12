@@ -18,7 +18,6 @@ class ReservationService(
     val userRepository: UserRepository,
     val locationRepository: LocationRepository
 ) {
-    var formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm")
 
     fun getReservations(): List<Reservation> {
         return reservationRepository.findAll()
@@ -31,8 +30,8 @@ class ReservationService(
     fun createReservation(newReservationRequest: CreateReservationRequest): Reservation {
         val userName = SecurityContextHolder.getContext().authentication.name
         val driver = userRepository.findByEmail(userName)!!
-        val startTime = LocalDateTime.parse(newReservationRequest.startTime, formatter)
-        val endTime = LocalDateTime.parse(newReservationRequest.endTime, formatter)
+        val startTime = LocalDateTime.parse(newReservationRequest.startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        val endTime = LocalDateTime.parse(newReservationRequest.endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
         val pickupLocation = locationRepository.findByCity(newReservationRequest.pickupLocation)
         val dropoutLocation = locationRepository.findByCity(newReservationRequest.dropoutLocation)
         return reservationRepository.save(
@@ -50,15 +49,21 @@ class ReservationService(
         val reservationList = reservation.customers
         reservationList.add(customer)
         val savedReservation: Reservation
-        if (reservation.availableSeats <=1){
-            savedReservation = reservationRepository.save(Reservation(reservation.id,reservation.driver, reservationList,
-                reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
-                reservation.tripCost, ReservationStatus.FINISHED, reservation.availableSeats - 1)
+        if (reservation.availableSeats <= 1) {
+            savedReservation = reservationRepository.save(
+                Reservation(
+                    reservation.id, reservation.driver, reservationList,
+                    reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
+                    reservation.tripCost, ReservationStatus.FINISHED, reservation.availableSeats - 1
+                )
             )
-        }else{
-            savedReservation = reservationRepository.save(Reservation(reservation.id,reservation.driver, reservationList,
-                reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
-                reservation.tripCost, ReservationStatus.ACTIVE, reservation.availableSeats - 1)
+        } else {
+            savedReservation = reservationRepository.save(
+                Reservation(
+                    reservation.id, reservation.driver, reservationList,
+                    reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
+                    reservation.tripCost, ReservationStatus.ACTIVE, reservation.availableSeats - 1
+                )
             )
         }
         customer.reservation.add(savedReservation)
@@ -70,18 +75,22 @@ class ReservationService(
         reservationRepository.delete(reservation)
     }
 
-    fun filterReservationByPickupLocation(city: String): List<Reservation>{
+    fun filterReservationByPickupLocation(city: String): List<Reservation> {
         val pickupLocation = locationRepository.findByCity(city)
         return reservationRepository.findAllByPickupLocation(pickupLocation)
     }
-    fun filterReservationByDropoutLocation(city: String): List<Reservation>{
+
+    fun filterReservationByDropoutLocation(city: String): List<Reservation> {
         val pickupLocation = locationRepository.findByCity(city)
         return reservationRepository.findALlByDropoutLocation(pickupLocation)
     }
 
-    fun filterReservationByPickupLocationAndDropoutLocation(pickupCity: String,dropoutCity:String): List<Reservation>{
+    fun filterReservationByPickupLocationAndDropoutLocation(
+        pickupCity: String,
+        dropoutCity: String
+    ): List<Reservation> {
         val pickupLocation = locationRepository.findByCity(pickupCity)
         val dropoutLocation = locationRepository.findByCity(dropoutCity)
-        return reservationRepository.findAllByPickupLocationAndDropoutLocation(pickupLocation,dropoutLocation)
+        return reservationRepository.findAllByPickupLocationAndDropoutLocation(pickupLocation, dropoutLocation)
     }
 }

@@ -30,8 +30,7 @@ export class SearchComponent implements OnInit {
       switchMap(queryParams=>this.service.getReservations(this.searchField.value,this.searchField2.value))
     ).subscribe({
       next: (data)=>{
-        this.reservations = data,
-        console.log(data)
+        this.reservations = data
       },
       error: (error)=> console.log("get reservation error", error)
     })
