@@ -1,29 +1,26 @@
 <section class="search-sec">
     <div class="container">
         <!-- <form action="#" method="post" novalidate="novalidate"> -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                            <input (keydown.enter)="getReservations()" [formControl]="searchField" type="search" class="form-control rounded" placeholder="Enter pickup city...">
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                            <input (keydown.enter)="getReservations()" [formControl]="searchField2" type="search" class="form-control rounded"placeholder="Enter drop city">
-                        </div>
-                        <!-- <ejs-calendar id=calendar [value]='value' [min]='minDate' [max]='maxDate' > </ejs-calendar >  -->
-                        <h4>Date:
-                            <input type="datetime-local" id="Test_DatetimeLocal">
-                        </h4>
-                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                            <button type="button" class="btn btn-danger wrn-btn" (click)="getReservations()">Search</button>
-                            <button type="button" class="btn btn-dark">Register</button>
-                            <button type="button" class="btn btn-primary">Login</button>
-                        </div>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-lg-6 my-2">
+                <input (keydown.enter)="getReservations()" [formControl]="searchField" type="search"
+                    class="form-control rounded" placeholder="Enter pickup city...">
             </div>
-        <!-- </form> -->
+            <div class="col-lg-6 my-2">
+                <input (keydown.enter)="getReservations()" [formControl]="searchField2" type="search"
+                    class="form-control rounded" placeholder="Enter drop city">
+            </div>
+            <!-- <ejs-calendar id=calendar [value]='value' [min]='minDate' [max]='maxDate' > </ejs-calendar >  -->
+            <div class="col-lg-12 mb-2 input-group">
+                <span class="input-group-text" id="basic-addon1">Date: </span>
+                <input class="form-control" type="datetime-local" id="Test_DatetimeLocal">
+            </div>
+
+            <div class="d-grid mb-2">
+                <button type="button" class="btn btn-danger wrn-btn" (click)="getReservations()">Search</button>
+            </div>
+        </div>
     </div>
+
 </section>
 <app-reservation [reservations]="reservations"></app-reservation>
-  
