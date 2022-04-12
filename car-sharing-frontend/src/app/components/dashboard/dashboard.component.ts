@@ -7,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  createReservation = false
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onClick() {
+    this.createReservation = !this.createReservation
+  }
   
 }

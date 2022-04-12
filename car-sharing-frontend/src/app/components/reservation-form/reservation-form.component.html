@@ -5,12 +5,12 @@
             <div class="d-grid">
                 <select class="custom-select mb-3" (change)="changeCity($event)" formControlName="pickupCity">
                     <option value="">Choose pickup location</option>
-                    <option *ngFor="let city of City" [ngValue]="city">
-                        {{ city }}
+                    <option *ngFor="let city of cities" [ngValue]="city">
+                        {{ city.city }}
                     </option>
                 </select>
                 <!-- error block -->
-                <div class="invalid-feedback" *ngIf="isSubmitted && cityName?.invalid">
+                <div class="invalid-feedback" *ngIf="isSubmitted && f['pickupCity'].errors">
                     <sup>*</sup>Please provide city name
                 </div>
             </div>
@@ -18,23 +18,40 @@
             <div class="d-grid">
                 <select class="custom-select mb-3" (change)="changeCity($event)" formControlName="dropoffCity">
                     <option value="">Choose dropoff locaiton</option>
-                    <option *ngFor="let city of City" [ngValue]="city">
-                        {{ city }}
+                    <option *ngFor="let city of cities" [ngValue]="city">
+                        {{ city.city }}
                     </option>
                 </select>
                 <!-- error block -->
-                <div class="invalid-feedback" *ngIf="isSubmitted && cityName?.invalid">
+                <div class="invalid-feedback" *ngIf="isSubmitted && f['dropoffCity'].errors">
                     <sup>*</sup>Please provide city name
                 </div>
             </div>
 
-            <div>
-                <input type="number" >
+            <div class="d-grid">
+                <input class="mb-3" type="number" formControlName="availableSeats" placeholder="Enter available seats">
             </div>
 
-            <button type="submit" class="btn btn-danger btn-lg btn-block">
-                Submit
-            </button>
+            <div class="d-grid">
+                <span>Enter start time</span>
+                <input class="mb-3" type="datetime-local" formControlName="startTime" placeholder="enter start time">
+            </div>
+
+            <div class="d-grid">
+                <span>Enter end time</span>
+                <input class="mb-3" type="datetime-local" formControlName="endTime" placeholder="enter start time">
+            </div>
+
+            <div class="d-grid">
+                <span>Price: </span>
+                <input class="mb-3" type="number" formControlName="price">
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    Create
+                </button>
+            </div>
         </form>
     </div>
 </div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MyLocation } from 'src/app/models/MyLocation';
+import { ReservationService } from 'src/app/services/reservation.service';
 
 @Component({
   selector: 'app-reservation-form',
@@ -9,26 +11,46 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ReservationFormComponent implements OnInit {
 
   reservationForm: FormGroup = this.formBuilder.group({
-    cityName: ['', [Validators.required]]
+    pickupCity: ['', [Validators.required]],
+    dropoffCity: ['', [Validators.required]],
+    availableSeats: ['', Validators.required],
+    startTime: ['', Validators.required],
+    endTime: ['', Validators.required],
+    price: ['', Validators.required]
   })
   isSubmitted = false
-  City: any = ['Florida', 'South Dakota', 'Tennessee', 'Michigan'];
+  cities: MyLocation[] = []
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private reservationService: ReservationService) { }
 
   ngOnInit(): void {
+    this.reservationService.getLocations().subscribe({
+      next: locations => {
+        this.cities = locations
+      },
+      error: error => {
+        console.log(error.error)
+      }
+    })
   }
 
   onSubmit() {
+    this.isSubmitted = true;
+    if (this.reservationForm.invalid) {
+      return;
+    }
 
+    console.log(this.reservationForm.value)
   }
 
-  changeCity(event: any) {
-
+  changeCity(e: any) {
+    
   }
 
-  get cityName() {
-    return this.reservationForm.get('cityName');
+  get f(): { [key: string]: AbstractControl } {
+    return this.reservationForm.controls;
   }
 
 }
