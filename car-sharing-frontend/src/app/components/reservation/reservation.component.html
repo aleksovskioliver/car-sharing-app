@@ -1,10 +1,22 @@
 <ul class="list-group">
-    <li *ngFor="let r of reservations" class="list-group-item">
-      <p><span>{{r.startTime}}  -  {{r.endTime}}</span></p>
-      <p><span>{{r.pickupLocation.city}}  -  {{r.dropoutLocation.city}}</span></p>
-      <p><span>{{r.tripCost}}</span></p>
-      <p><span>Available seats: {{r.availableSeats}}</span></p>
-      <p><span>STATUS: {{r.status}}</span></p>
-      <button type="submit" (click)="reserved(r.id)" >RESERVE</button>
-    </li>
+  <li *ngFor="let r of reservations" class="list-group-item">
+    <div (click)="setMarker(r)">
+      <p>
+        <span>{{ r.startTime }} - {{ r.endTime }}</span>
+      </p>
+      <p>
+        <span>{{ r.pickupLocation.city }} - {{ r.dropoutLocation.city }}</span>
+      </p>
+      <p>
+        <span>{{ r.tripCost }}</span>
+      </p>
+      <p>
+        <span>Available seats: {{ r.availableSeats }}</span>
+      </p>
+      <p>
+        <span>STATUS: {{ r.status }}</span>
+      </p>
+      <button type="submit" (click)="reserved(r.id)">RESERVE</button>
+    </div>
+  </li>
 </ul>
