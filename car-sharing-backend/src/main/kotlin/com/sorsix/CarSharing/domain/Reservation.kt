@@ -1,5 +1,6 @@
 package com.sorsix.CarSharing.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalDateTime
 import javax.persistence.*
 

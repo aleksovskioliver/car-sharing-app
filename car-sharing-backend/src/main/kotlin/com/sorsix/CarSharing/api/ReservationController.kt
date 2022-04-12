@@ -1,7 +1,6 @@
 package com.sorsix.CarSharing.api
 
 import com.sorsix.CarSharing.api.request.CreateReservationRequest
-import com.sorsix.CarSharing.api.request.addCustomerToReservation
 import com.sorsix.CarSharing.domain.Reservation
 import com.sorsix.CarSharing.service.ReservationService
 import org.springframework.http.ResponseEntity
@@ -37,8 +36,8 @@ class ReservationController(private val reservationService: ReservationService) 
         reservationService.createReservation(newReservation)
     }
 
-    @PostMapping("/addCustomer")
-    fun addCustomer(@RequestBody addNewCustomer: addCustomerToReservation){
-        reservationService.addCustomerToReservation(addNewCustomer)
+    @PostMapping("/addCustomer/{id}")
+    fun addCustomer(@PathVariable id: Long){
+        reservationService.addCustomerToReservation(id)
     }
 }

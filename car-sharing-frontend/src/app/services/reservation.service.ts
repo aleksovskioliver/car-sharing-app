@@ -3,12 +3,13 @@ import{HttpClient} from '@angular/common/http'
 import { Reservation } from '../models/Reservation';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
 
-  URL = 'http://localhost:8080/api'
+
 
   constructor(private http: HttpClient) {
     console.log('ReservationService constructor')
@@ -24,5 +25,9 @@ export class ReservationService {
      }else{
       return this.http.get<Reservation[]>(`http://localhost:8080/api/reservation?pickupCity=${pickupCity}&dropoutCity=${dropoutCity}`); 
      }
+   }
+
+   addCustomerToReservation(id: number){
+      this.http.post(`http://localhost:8080/api/reservation/addCustomer/${id}`,id).subscribe(it => {});
    }
 }

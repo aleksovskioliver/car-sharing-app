@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Reservation } from 'src/app/models/Reservation';
 import { ReservationService } from 'src/app/services/reservation.service';
 
@@ -9,16 +9,13 @@ import { ReservationService } from 'src/app/services/reservation.service';
 })
 export class ReservationComponent implements OnInit {
 
-  reservations: Reservation[] = []
+  @Input() reservations: Reservation[] = []
 
   constructor(private service: ReservationService) { }
 
   ngOnInit(): void {
-    this.service.getReservations('','').subscribe({
-      next: (data)=>{
-        console.log('data',data);
-        this.reservations = data;
-      }
-    })
+  }
+  reserved(id: number){
+    this.service.addCustomerToReservation(id);
   }
 }
