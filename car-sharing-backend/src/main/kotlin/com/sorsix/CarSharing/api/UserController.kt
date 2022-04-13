@@ -1,6 +1,9 @@
 package com.sorsix.CarSharing.api
 
 import com.sorsix.CarSharing.api.request.CreateUserRequest
+import com.sorsix.CarSharing.api.response.GetUserResponse
+import com.sorsix.CarSharing.api.response.GetUserResponseFailed
+import com.sorsix.CarSharing.api.response.GetUserResponseSuccess
 import com.sorsix.CarSharing.domain.exception.UserAlreadyExists
 import com.sorsix.CarSharing.service.UserService
 import org.springframework.http.ResponseEntity
@@ -18,5 +21,11 @@ class UserController(private val userService: UserService) {
         } catch (exception: UserAlreadyExists) {
             ResponseEntity.badRequest().body(exception.message)
         }
+    }
+
+    @GetMapping("/get")
+    fun getUser(): ResponseEntity<GetUserResponse> = when (val user = userService.getLoggedInUser()) {
+        is GetUserResponseSuccess -> ResponseEntity.ok(user)
+        is GetUserResponseFailed -> ResponseEntity.badRequest().body(user)
     }
 }

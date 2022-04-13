@@ -1,3 +1,4 @@
+import { ReservationDTO } from "./ReservationDTO";
 import { Vehicle } from "./Vehicle";
 
 export interface User {
@@ -7,5 +8,6 @@ export interface User {
     email: string;
     password: string;
     role: string;
-    vehicle: Vehicle | null
+    vehicle: Vehicle | null;
+    reservation: ReservationDTO | null
 }

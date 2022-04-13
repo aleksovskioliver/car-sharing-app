@@ -80,7 +80,8 @@ export class RegisterComponent implements OnInit {
         model: data.model,
         make: data.make,
         seats: data.seats
-      } : null
+      } : null,
+      reservation: null
     }
     console.log(user)
 
