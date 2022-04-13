@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import {GoogleMapsModule} from '@angular/google-maps'
+import {NgxPaginationModule} from 'ngx-pagination'
 
 
 
@@ -43,7 +44,8 @@ import { AuthInterceptorService } from './interceptors/auth-interceptor.service'
     HttpClientModule,
     ReactiveFormsModule,
     GoogleMapsModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]

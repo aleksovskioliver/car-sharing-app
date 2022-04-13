@@ -22,7 +22,7 @@ class ReservationController(private val reservationService: ReservationService) 
         } else if((pickupCity != null || pickupCity == "") && (dropoutCity != null || dropoutCity == "")){
             reservationService.filterReservationByPickupLocationAndDropoutLocation(pickupCity,dropoutCity)
         }else{
-            reservationService.getReservations()
+            reservationService.getActiveReservation()
         }
     }
 

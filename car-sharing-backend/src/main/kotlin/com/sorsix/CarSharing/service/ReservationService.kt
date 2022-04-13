@@ -23,6 +23,10 @@ class ReservationService(
         return reservationRepository.findAll()
     }
 
+    fun getActiveReservation(): List<Reservation>{
+        return reservationRepository.findAllByStatus(ReservationStatus.ACTIVE).reversed()
+    }
+
     fun getReservationById(id: Long): Reservation {
         return reservationRepository.findByIdOrNull(id) ?: throw ReservationNotFound("Reservation is not created")
     }
@@ -77,20 +81,20 @@ class ReservationService(
 
     fun filterReservationByPickupLocation(city: String): List<Reservation> {
         val pickupLocation = locationRepository.findByCity(city)
-        return reservationRepository.findAllByPickupLocation(pickupLocation)
+        return reservationRepository.findAllByPickupLocationAndStatus(pickupLocation,ReservationStatus.ACTIVE).reversed()
     }
 
     fun filterReservationByDropoutLocation(city: String): List<Reservation> {
-        val pickupLocation = locationRepository.findByCity(city)
-        return reservationRepository.findALlByDropoutLocation(pickupLocation)
+        val dropoutLocation = locationRepository.findByCity(city)
+        return reservationRepository.findALlByDropoutLocationAndStatus(dropoutLocation,ReservationStatus.ACTIVE).reversed()
     }
 
     fun filterReservationByPickupLocationAndDropoutLocation(
         pickupCity: String,
-        dropoutCity: String
+        dropoutCity: String,
     ): List<Reservation> {
         val pickupLocation = locationRepository.findByCity(pickupCity)
         val dropoutLocation = locationRepository.findByCity(dropoutCity)
-        return reservationRepository.findAllByPickupLocationAndDropoutLocation(pickupLocation, dropoutLocation)
+        return reservationRepository.findAllByPickupLocationAndDropoutLocationAndStatus(pickupLocation, dropoutLocation,ReservationStatus.ACTIVE).reversed()
     }
 }

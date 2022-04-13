@@ -1,5 +1,5 @@
 <ul class="list-group">
-  <li *ngFor="let r of reservations" class="list-group-item">
+  <li *ngFor="let r of reservations | paginate: { itemsPerPage: 3, currentPage: p }" class="list-group-item page-item">
     <div (click)="setMarker(r)">
       <p>
         <span>{{ r.startTime }} - {{ r.endTime }}</span>
@@ -16,7 +16,12 @@
       <p>
         <span>STATUS: {{ r.status }}</span>
       </p>
-      <button type="submit" (click)="reserved(r.id)">RESERVE</button>
-    </div>
+      <form (ngSubmit) = "reserved(r.id)" method="post">
+          <div *ngIf="r.status=='ACTIVE'">
+              <button type="submit">RESERVE</button>
+          </div>
+    </form>
+  </div>
   </li>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </ul>

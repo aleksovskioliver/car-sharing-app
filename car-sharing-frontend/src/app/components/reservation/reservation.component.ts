@@ -11,6 +11,7 @@ import { ReservationService } from 'src/app/services/reservation.service';
 export class ReservationComponent implements OnInit {
 
   @Input() reservations: Reservation[] = []
+  p: number = 1;
 
   constructor(private service: ReservationService,
     private mapService: MapService) { }
