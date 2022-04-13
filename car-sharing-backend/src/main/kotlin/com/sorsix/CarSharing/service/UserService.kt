@@ -4,6 +4,7 @@ import com.sorsix.CarSharing.api.request.CreateUserRequest
 import com.sorsix.CarSharing.api.response.GetUserResponse
 import com.sorsix.CarSharing.api.response.GetUserResponseFailed
 import com.sorsix.CarSharing.api.response.GetUserResponseSuccess
+import com.sorsix.CarSharing.domain.Reservation
 import com.sorsix.CarSharing.domain.Role
 import com.sorsix.CarSharing.domain.User
 import com.sorsix.CarSharing.domain.exception.UserAlreadyExists
