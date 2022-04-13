@@ -1,33 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps'
-
-interface NewType {
-  position: {
-    lat: number
-    lng: number
-  }
-  label: {
-    color: string
-    text: string
-  }
-  title: string
-  info: string
-  options: {
-    animation: google.maps.Animation
-  }
-}
-
+import { MapInfoWindow, GoogleMap } from '@angular/google-maps'
+import { MapService } from 'src/app/services/map.service'
+import { NewType } from 'src/app/models/newType'
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit{
 
   @ViewChild(GoogleMap, { static: false })
   map!: GoogleMap
   @ViewChild(MapInfoWindow, { static: false })
   info!: MapInfoWindow
+
+  constructor(private service: MapService){}
   
   zoom = 8
   center!: google.maps.LatLngLiteral
@@ -39,7 +26,7 @@ export class MapComponent implements OnInit {
     maxZoom: 15,
     minZoom: 8,
   }
-  markers: NewType[] = []
+  markers: NewType[] = this.service.markers;
   infoContent = ''
 
   ngOnInit() {
@@ -66,22 +53,5 @@ export class MapComponent implements OnInit {
   logCenter() {
     console.log(JSON.stringify(this.map.getCenter()))
   }
-
-  addMarker() {
-    this.markers.push({
-      position: {
-        lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-        lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-      },
-      label: {
-        color: "red",
-        text: 'Marker label ' + (this.markers.length + 1),
-      },
-      title: 'Marker title ' + (this.markers.length + 1),
-      info: 'Marker info ' + (this.markers.length + 1),
-      options: {
-        animation: google.maps.Animation.BOUNCE,
-      },
-    })
-  }
+  
 }

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MapService } from 'src/app/services/map.service';
 import { Reservation } from 'src/app/models/Reservation';
 import { ReservationService } from 'src/app/services/reservation.service';
 
@@ -11,11 +12,16 @@ export class ReservationComponent implements OnInit {
 
   @Input() reservations: Reservation[] = []
 
-  constructor(private service: ReservationService) { }
+  constructor(private service: ReservationService,
+    private mapService: MapService) { }
 
   ngOnInit(): void {
   }
   reserved(id: number){
     this.service.addCustomerToReservation(id);
+  }
+  setMarker(r: Reservation){
+    this.mapService.addMarker(r.pickupLocation.lat,r.pickupLocation.lng);
+    this.mapService.addMarker(r.dropoutLocation.lat,r.dropoutLocation.lng);
   }
 }
