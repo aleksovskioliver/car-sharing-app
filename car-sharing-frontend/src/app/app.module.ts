@@ -23,6 +23,7 @@ import { PhoneMaskDirective } from './directives/phone-mask.directive';
 import { SearchComponent } from './components/search/search.component';
 import { ReservationFormComponent } from './components/reservation-form/reservation-form.component';
 import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AuthInterceptorService } from './interceptors/auth-interceptor.service'
     LoginComponent,
     PhoneMaskDirective,
     SearchComponent,
-    ReservationFormComponent
+    ReservationFormComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

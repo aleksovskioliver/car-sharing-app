@@ -1,12 +1,16 @@
 package com.sorsix.CarSharing.service
 
 import com.sorsix.CarSharing.api.request.CreateUserRequest
+import com.sorsix.CarSharing.api.response.GetUserResponse
+import com.sorsix.CarSharing.api.response.GetUserResponseFailed
+import com.sorsix.CarSharing.api.response.GetUserResponseSuccess
 import com.sorsix.CarSharing.domain.Role
 import com.sorsix.CarSharing.domain.User
 import com.sorsix.CarSharing.domain.exception.UserAlreadyExists
 import com.sorsix.CarSharing.repository.UserRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -19,12 +23,17 @@ class UserService(
 
     val logger: Logger = LoggerFactory.getLogger(UserService::class.java)
 
-    fun getUserById(id: Long) = userRepository.findById(id)
-
     fun getUserByEmail(email: String): User? {
         return userRepository.findByEmail(email)
     }
 
+    fun getLoggedInUser(): GetUserResponse {
+        val username = SecurityContextHolder.getContext().authentication.name
+        return when(val user = getUserByEmail(username)){
+            is User -> GetUserResponseSuccess(user)
+            else -> GetUserResponseFailed("No user with that email")
+        }
+    }
 
     fun createUser(newUser: CreateUserRequest): User {
         if(getUserByEmail(newUser.email) != null) {
