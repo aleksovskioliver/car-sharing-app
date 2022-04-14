@@ -6,8 +6,6 @@ import {GoogleMapsModule} from '@angular/google-maps'
 import {NgxPaginationModule} from 'ngx-pagination'
 
 
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReservationComponent } from './components/reservation/reservation.component';

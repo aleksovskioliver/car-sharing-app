@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -10,11 +12,24 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HeaderComponent {
 
   isLoggedIn: boolean = false
+  loggedInUser: User | null = null
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn()
+    this.userService.getUser().subscribe({
+      next: data => {
+        if(data.user) {
+          this.loggedInUser = data.user
+          this.isLoggedIn = true
+        }
+        else {
+          this.isLoggedIn = false
+        }
+      }
+    })
   }
 
   logout() {

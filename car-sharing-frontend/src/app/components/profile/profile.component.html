@@ -1,4 +1,8 @@
 <div *ngIf="user">
-    <h1>{{user.firstName}}</h1>
-    <h3>{{user.email}}</h3>
+    <div class="text-center">
+        <h2>{{user.firstName}} {{user.lastName}}</h2>
+        <h4>{{user.role.includes('DRIVER') ? "Driver" : "Rider"}}</h4>
+    </div>
+
+    
 </div>

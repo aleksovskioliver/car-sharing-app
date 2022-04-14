@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MyLocation } from 'src/app/models/MyLocation';
 import { ReservationDTO } from 'src/app/models/ReservationDTO';
+import { MapService } from 'src/app/services/map.service';
 import { ReservationService } from 'src/app/services/reservation.service';
 
 @Component({
@@ -23,6 +24,7 @@ export class ReservationFormComponent implements OnInit {
   cities: MyLocation[] = []
 
   constructor(
+    private mapService: MapService,
     private formBuilder: FormBuilder,
     private reservationService: ReservationService) { }
 
@@ -56,8 +58,14 @@ export class ReservationFormComponent implements OnInit {
     console.log(reservation)
   }
 
-  changeCity(e: any) {
-    
+  changePickupCity() {
+    const city = this.reservationForm.get('pickupCity')?.value
+    this.mapService.addMarker(city.lat, city.lng)
+  }
+
+  changeDropoffCity() {
+    const city = this.reservationForm.get('dropoffCity')?.value
+    this.mapService.addMarker(city.lat, city.lng)
   }
 
   get f(): { [key: string]: AbstractControl } {

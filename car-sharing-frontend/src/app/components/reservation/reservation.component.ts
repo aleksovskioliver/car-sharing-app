@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
 import { Reservation } from 'src/app/models/Reservation';
 import { ReservationService } from 'src/app/services/reservation.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-reservation',
@@ -13,16 +16,29 @@ export class ReservationComponent implements OnInit {
   @Input() reservations: Reservation[] = []
   p: number = 1;
 
-  constructor(private service: ReservationService,
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private service: ReservationService,
     private mapService: MapService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  reserved(id: number) {
+    if (this.authService.isLoggedIn()) {
+      this.service.addCustomerToReservation(id);
+    } else {
+      this.router.navigateByUrl("/login")
+    }
   }
-  reserved(id: number){
-    this.service.addCustomerToReservation(id);
+
+  setMarker(r: Reservation) {
+    this.mapService.addMarker(r.pickupLocation.lat, r.pickupLocation.lng);
+    this.mapService.addMarker(r.dropoutLocation.lat, r.dropoutLocation.lng);
   }
-  setMarker(r: Reservation){
-    this.mapService.addMarker(r.pickupLocation.lat,r.pickupLocation.lng);
-    this.mapService.addMarker(r.dropoutLocation.lat,r.dropoutLocation.lng);
+
+  formatTime(time: string) {
+    const date = moment(time)
+    return date.format("LLL")
   }
 }

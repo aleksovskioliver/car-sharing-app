@@ -9,5 +9,5 @@ export interface User {
     password: string;
     role: string;
     vehicle: Vehicle | null;
-    reservation: ReservationDTO | null
+    reservation: ReservationDTO[] | null
 }

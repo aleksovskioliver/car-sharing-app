@@ -1,27 +1,24 @@
 <ul class="list-group">
-  <li *ngFor="let r of reservations | paginate: { itemsPerPage: 3, currentPage: p }" class="list-group-item page-item">
-    <div (click)="setMarker(r)">
-      <p>
-        <span>{{ r.startTime }} - {{ r.endTime }}</span>
-      </p>
-      <p>
-        <span>{{ r.pickupLocation.city }} - {{ r.dropoutLocation.city }}</span>
-      </p>
-      <p>
-        <span>{{ r.tripCost }}</span>
-      </p>
-      <p>
-        <span>Available seats: {{ r.availableSeats }}</span>
-      </p>
-      <p>
-        <span>STATUS: {{ r.status }}</span>
-      </p>
-      <form (ngSubmit) = "reserved(r.id)" method="post">
-          <div *ngIf="r.status=='ACTIVE'">
-              <button type="submit">RESERVE</button>
-          </div>
-    </form>
-  </div>
+  <li *ngFor="let r of reservations | paginate: { itemsPerPage: 3, currentPage: p }" class="list-group-item page-item border-0">
+    <div class="reservation card" (click)="setMarker(r)">
+      <div class="card-header d-flex justify-content-between"
+        [ngClass]="r.status == 'ACTIVE' ? 'text-success' : 'text-danger'">
+        <span>Seats left: {{ r.availableSeats }}</span>
+        <span>{{ r.status }}</span>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ r.pickupLocation.city }} - {{ r.dropoutLocation.city }}</h5>
+        <p class="card-text">{{ formatTime(r.startTime) }} - {{ formatTime(r.endTime) }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <span>Price: {{ r.tripCost }}den</span>
+          <form (ngSubmit)="reserved(r.id)" method="post">
+            <div *ngIf="r.status=='ACTIVE'">
+              <button class="btn btn-sm btn-outline-success" type="submit">RESERVE</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </li>
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </ul>

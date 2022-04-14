@@ -5,9 +5,11 @@
             <a routerLink="/register" class="btn btn-dark">Register</a>
             <a routerLink="/login" class="btn btn-primary">Login</a>
         </div>
-        <div *ngIf="isLoggedIn">
-            <a routerLink="/profile">Account</a>
-            <a (click)="logout()" class="btn btn-primary">Logout</a>
+        <div *ngIf="isLoggedIn && loggedInUser" class="navbar-nav">
+            <div class="d-flex">
+                <a class="nav-link me-2" routerLink="/profile">{{loggedInUser.email}}</a>
+                <a (click)="logout()" class="btn btn-primary">Logout</a>
+            </div>
         </div>
     </div>
 </nav>

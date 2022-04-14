@@ -13,6 +13,7 @@ import { ReservationService } from 'src/app/services/reservation.service';
 export class SearchComponent implements OnInit {
 
   reservations: Reservation[] = []
+  loading = true
   searchField = new FormControl('');
   searchField2 = new FormControl('');
 
@@ -30,6 +31,7 @@ export class SearchComponent implements OnInit {
       switchMap(queryParams=>this.service.getReservations(this.searchField.value,this.searchField2.value))
     ).subscribe({
       next: (data)=>{
+        this.loading = false
         this.reservations = data
       },
       error: (error)=> console.log("get reservation error", error)

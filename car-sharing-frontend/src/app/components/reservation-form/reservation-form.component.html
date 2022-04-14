@@ -3,7 +3,7 @@
         <h2 class="mb-3 text-center">Create reservation</h2>
         <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
             <div class="d-grid">
-                <select class="custom-select mb-3" (change)="changeCity($event)" formControlName="pickupCity">
+                <select class="custom-select mb-3" (change)="changePickupCity()" formControlName="pickupCity">
                     <option value="">Choose pickup location</option>
                     <option *ngFor="let city of cities" [ngValue]="city">
                         {{ city.city }}
@@ -16,7 +16,7 @@
             </div>
 
             <div class="d-grid">
-                <select class="custom-select mb-3" (change)="changeCity($event)" formControlName="dropoffCity">
+                <select class="custom-select mb-3" (change)="changeDropoffCity()" formControlName="dropoffCity">
                     <option value="">Choose dropoff locaiton</option>
                     <option *ngFor="let city of cities" [ngValue]="city">
                         {{ city.city }}

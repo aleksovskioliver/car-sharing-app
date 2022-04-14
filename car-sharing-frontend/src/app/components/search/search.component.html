@@ -21,4 +21,9 @@
     </div>
 </section>
 
-<app-reservation [reservations]="reservations"></app-reservation>
+<div *ngIf="loading" class="d-flex align-items-center justify-content-center h-50">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<app-reservation *ngIf="!loading" [reservations]="reservations"></app-reservation>
