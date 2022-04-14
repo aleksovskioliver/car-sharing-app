@@ -27,6 +27,7 @@ export class ReservationComponent implements OnInit {
   reserved(id: number) {
     if (this.authService.isLoggedIn()) {
       this.service.addCustomerToReservation(id);
+      window.location.reload();
     } else {
       this.router.navigateByUrl("/login")
     }

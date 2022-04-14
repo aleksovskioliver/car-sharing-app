@@ -55,7 +55,7 @@ export class ReservationFormComponent implements OnInit {
     }
 
     this.reservationService.createReservation(reservation)
-    console.log(reservation)
+    window.location.reload();
   }
 
   changePickupCity() {

@@ -1,8 +1,9 @@
 import { MyLocation } from "./MyLocation";
+import { User } from "./User";
 
 export interface Reservation{
     id: number
-    driverId: number,
+    driver: User,
     startTime: string,
     endTime: string,
     pickupLocation: MyLocation,

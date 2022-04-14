@@ -9,8 +9,10 @@
       <div class="card-body">
         <h5 class="card-title">{{ r.pickupLocation.city }} - {{ r.dropoutLocation.city }}</h5>
         <p class="card-text">{{ formatTime(r.startTime) }} - {{ formatTime(r.endTime) }}</p>
+        <span>Price: {{ r.tripCost }}den</span>
         <div class="d-flex justify-content-between align-items-center">
-          <span>Price: {{ r.tripCost }}den</span>
+          <span>Driver: {{r.driver.firstName}} {{r.driver.lastName}}</span>
+          <span>Contact: {{r.driver.phoneNumber}}</span>
           <form (ngSubmit)="reserved(r.id)" method="post">
             <div *ngIf="r.status=='ACTIVE'">
               <button class="btn btn-sm btn-outline-success" type="submit">RESERVE</button>
