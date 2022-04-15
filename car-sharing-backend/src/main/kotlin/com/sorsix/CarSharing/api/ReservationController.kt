@@ -2,8 +2,10 @@ package com.sorsix.CarSharing.api
 
 import com.sorsix.CarSharing.api.request.CreateReservationRequest
 import com.sorsix.CarSharing.domain.Reservation
+import com.sorsix.CarSharing.domain.exception.CustomerAlreadyReserved
 import com.sorsix.CarSharing.service.ReservationService
 import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.ok
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -15,7 +17,7 @@ class ReservationController(private val reservationService: ReservationService) 
     fun getAllReservations(@RequestParam(required = false) pickupCity: String?,
                            @RequestParam(required = false) dropoutCity:String?)
     : List<Reservation> {
-        return if (pickupCity != null && (dropoutCity == null || dropoutCity != "")){
+        return if (pickupCity != null && (dropoutCity == null || dropoutCity == "")){
             reservationService.filterReservationByPickupLocation(pickupCity)
         } else if((pickupCity == null || pickupCity == "") && dropoutCity != null){
             reservationService.filterReservationByDropoutLocation(dropoutCity)
@@ -37,7 +39,12 @@ class ReservationController(private val reservationService: ReservationService) 
     }
 
     @PostMapping("/addCustomer/{id}")
-    fun addCustomer(@PathVariable id: Long){
-        reservationService.addCustomerToReservation(id)
+    fun addCustomer(@PathVariable id: Long): ResponseEntity<Any> {
+        try {
+            reservationService.addCustomerToReservation(id)
+        }catch (e: CustomerAlreadyReserved){
+            return ResponseEntity.badRequest().body(e.message)
+        }
+        return ResponseEntity.ok().build()
     }
 }

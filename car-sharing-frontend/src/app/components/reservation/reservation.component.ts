@@ -15,6 +15,8 @@ export class ReservationComponent implements OnInit {
 
   @Input() reservations: Reservation[] = []
   p: number = 1;
+  errorMessage = '';
+  success = false;
 
   constructor(
     private router: Router,
@@ -25,10 +27,19 @@ export class ReservationComponent implements OnInit {
   ngOnInit(): void { }
 
   reserved(id: number, r: Reservation) {
+    this.errorMessage = '';
+    this.success = false;
+
     if (this.authService.isLoggedIn()) {
-      r.availableSeats--
-      this.service.addCustomerToReservation(id);
-      //window.location.reload();
+      
+      this.service.addCustomerToReservation(id).subscribe({
+        next: () => {
+          r.availableSeats--
+          this.success = true;
+        },
+        error: error => {
+          this.errorMessage = error        }
+      })
     } else {
       this.router.navigateByUrl("/login")
     }

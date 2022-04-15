@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Reservation } from '../models/Reservation';
-import { catchError, Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { MyLocation } from '../models/MyLocation';
 import { ReservationDTO } from '../models/ReservationDTO';
 
@@ -34,7 +34,10 @@ export class ReservationService {
   }
 
   addCustomerToReservation(id: number) {
-    this.http.post(`${this.url}/reservation/addCustomer/${id}`, id).subscribe(it => { });
+    return this.http.post(`${this.url}/reservation/addCustomer/${id}`, id).pipe(
+      tap(it => console.log(it)),
+      catchError(error => throwError(() => new Error(error.error)))
+   )
   }
 
   getReservationById(id: number) {
