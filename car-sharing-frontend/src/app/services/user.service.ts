@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GetUserResponse } from '../models/GetUserResponse';
+import { Reservation } from '../models/Reservation';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class UserService {
 
   getUser(): Observable<GetUserResponse> {
     return this.http.get<GetUserResponse>(`${this.url}/get`)
+  }
+
+  getUserReservations(): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.url}/reservations`)
   }
 
 }

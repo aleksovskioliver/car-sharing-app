@@ -4,5 +4,8 @@
         <h4>{{user.role.includes('DRIVER') ? "Driver" : "Rider"}}</h4>
     </div>
 
-    
+    <app-reservation [reservations]="reservations"></app-reservation>
+</div>
+<div *ngIf="error != ''">
+    {{error}}
 </div>

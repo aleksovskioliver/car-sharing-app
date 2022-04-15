@@ -24,10 +24,11 @@ export class ReservationComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  reserved(id: number) {
+  reserved(id: number, r: Reservation) {
     if (this.authService.isLoggedIn()) {
+      r.availableSeats--
       this.service.addCustomerToReservation(id);
-      window.location.reload();
+      //window.location.reload();
     } else {
       this.router.navigateByUrl("/login")
     }

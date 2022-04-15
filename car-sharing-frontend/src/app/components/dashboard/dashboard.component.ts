@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,13 +11,19 @@ export class DashboardComponent implements OnInit {
 
   createReservation = false
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
   }
 
   onClick() {
-    this.createReservation = !this.createReservation
+    if (this.authService.isLoggedIn()) {
+      this.createReservation = !this.createReservation
+    } else {
+      this.router.navigateByUrl("/login")
+    }
   }
-  
+
 }

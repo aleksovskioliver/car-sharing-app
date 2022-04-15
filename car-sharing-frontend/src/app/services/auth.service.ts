@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, Subject, tap, throwError } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import { AuthenticationRequest } from '../models/AuthenticationRequest';
-import { User } from '../models/User';
 import * as moment from 'moment';
 import { AuthenticationResponse } from '../models/AuthenticationResponse';
+import { UserDTO } from '../models/UserDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  registerUser(user: User) {
+  registerUser(user: UserDTO) {
     return this.http.post(`${this.url}/api/user/create`, user)
   }
 

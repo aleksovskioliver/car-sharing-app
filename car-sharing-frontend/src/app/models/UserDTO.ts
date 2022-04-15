@@ -1,7 +1,6 @@
-import { Reservation } from "./Reservation";
 import { Vehicle } from "./Vehicle";
 
-export interface User {
+export interface UserDTO {
     firstName: string;
     lastName: string;
     phoneNumber: string;
@@ -9,5 +8,4 @@ export interface User {
     password: string;
     role: string;
     vehicle: Vehicle | null;
-    reservation: Reservation[];
 }
