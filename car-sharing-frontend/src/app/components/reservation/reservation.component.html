@@ -2,8 +2,8 @@
   {{ errorMessage }}
 </div>
 <div *ngIf="success" class="alert alert-success" role="alert">
- <p>You have successfully reserved your seat</p>
-  Have a nice trip
+  <div>You have successfully reserved your seat.</div>
+  <div>Have a nice trip!</div>
 </div>
 <ul class="list-group">
   <li *ngFor="let r of reservations | paginate: { itemsPerPage: 3, currentPage: p }"
@@ -32,7 +32,7 @@
           </form>
         </div>
       </div>
-      </div>
+    </div>
   </li>
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </ul>
