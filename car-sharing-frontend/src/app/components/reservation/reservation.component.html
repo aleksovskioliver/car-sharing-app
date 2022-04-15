@@ -25,7 +25,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <span>Vehicle make: {{r.driver.vehicle?.make}}</span>
           <span>Vehicle model: {{r.driver.vehicle?.model}}</span>
-          <form (ngSubmit)="reserved(r.id, r)" method="post">
+          <form (ngSubmit)="reserved(r)" method="post">
             <div *ngIf="r.status=='ACTIVE'">
               <button class="btn btn-sm btn-outline-success" type="submit">RESERVE</button>
             </div>

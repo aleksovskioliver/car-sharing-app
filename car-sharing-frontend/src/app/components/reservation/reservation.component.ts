@@ -26,13 +26,13 @@ export class ReservationComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  reserved(id: number, r: Reservation) {
+  reserved(r: Reservation) {
     this.errorMessage = '';
     this.success = false;
 
     if (this.authService.isLoggedIn()) {
       
-      this.service.addCustomerToReservation(id).subscribe({
+      this.service.addCustomerToReservation(r.id).subscribe({
         next: () => {
           r.availableSeats--
           this.success = true;
