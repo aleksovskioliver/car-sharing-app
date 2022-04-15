@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/User';
+import { UserDTO } from 'src/app/models/UserDTO';
 import { CustomValidators } from 'src/app/providers/custom-validators';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.form.get('role')!.valueChanges
       .subscribe(value => {
-        if(value == 'rider') { 
+        if (value == 'rider') {
           this.form.get('model')?.setValue('')
           this.form.get('make')?.setValue('')
           this.form.get('seats')?.setValue('')
@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit {
     }
 
     const data = this.form.value
-    const user: User = {
+    const user: UserDTO = {
       firstName: data.firstname,
       lastName: data.lastname,
       phoneNumber: data.phonenumber,
@@ -80,8 +80,7 @@ export class RegisterComponent implements OnInit {
         model: data.model,
         make: data.make,
         seats: data.seats
-      } : null,
-      reservation: null
+      } : null
     }
     console.log(user)
 

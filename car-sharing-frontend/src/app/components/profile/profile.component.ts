@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Reservation } from 'src/app/models/Reservation';
 import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
 
@@ -10,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ProfileComponent implements OnInit {
 
   user: User | null = null
+  reservations: Reservation[] = []
   error: string = ''
 
   constructor(private userService: UserService) { }
@@ -25,6 +27,13 @@ export class ProfileComponent implements OnInit {
         }
       },
       error: error => console.log(error)
+    })
+
+    this.userService.getUserReservations().subscribe({
+      next: data => {
+        console.log(data)
+        this.reservations = data
+      }
     })
   }
 
