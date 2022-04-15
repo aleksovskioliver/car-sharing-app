@@ -13,6 +13,10 @@
         <div class="d-flex justify-content-between align-items-center">
           <span>Driver: {{r.driver.firstName}} {{r.driver.lastName}}</span>
           <span>Contact: {{r.driver.phoneNumber}}</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <span>Vehicle make: {{r.driver.vehicle?.make}}</span>
+          <span>Vehicle model: {{r.driver.vehicle?.model}}</span>
           <form (ngSubmit)="reserved(r.id)" method="post">
             <div *ngIf="r.status=='ACTIVE'">
               <button class="btn btn-sm btn-outline-success" type="submit">RESERVE</button>

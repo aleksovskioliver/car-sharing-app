@@ -32,8 +32,7 @@ class ReservationService(
     }
 
     fun createReservation(newReservationRequest: CreateReservationRequest): Reservation {
-        val userName = SecurityContextHolder.getContext().authentication.name
-        val driver = userRepository.findByEmail(userName)!!
+        val driver = userRepository.findByEmail(SecurityContextHolder.getContext().authentication.name)!!
         val startTime = LocalDateTime.parse(newReservationRequest.startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
         val endTime = LocalDateTime.parse(newReservationRequest.endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
         val pickupLocation = locationRepository.findByCity(newReservationRequest.pickupLocation)
@@ -47,35 +46,25 @@ class ReservationService(
     }
 
     fun addCustomerToReservation(reservationId: Long): Reservation {
-        val reservation = reservationRepository.findByIdOrNull(reservationId) ?: throw Exception()
-        val userName = SecurityContextHolder.getContext().authentication.name
-        val customer = userRepository.findByEmail(userName)!!
-        val reservationList = reservation.customers
-        reservationList.add(customer)
-        val savedReservation: Reservation
-        if (reservation.availableSeats <= 1) {
-            savedReservation = reservationRepository.save(
-                Reservation(
-                    reservation.id, reservation.driver, reservationList,
-                    reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
-                    reservation.tripCost, ReservationStatus.FINISHED, reservation.availableSeats - 1
-                )
+        val reservation = reservationRepository.findByIdOrNull(reservationId) ?: throw ReservationNotFound("Reservation with id $reservationId is not found")
+        val customer = userRepository.findByEmail(SecurityContextHolder.getContext().authentication.name)!!
+        reservation.customers.add(customer)
+        val savedReservation = reservationRepository.save(
+            Reservation(
+                reservation.id, reservation.driver, reservation.customers,
+                reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
+                reservation.tripCost,
+                if (reservation.availableSeats <=1) ReservationStatus.FINISHED else ReservationStatus.ACTIVE,
+                reservation.availableSeats - 1
             )
-        } else {
-            savedReservation = reservationRepository.save(
-                Reservation(
-                    reservation.id, reservation.driver, reservationList,
-                    reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
-                    reservation.tripCost, ReservationStatus.ACTIVE, reservation.availableSeats - 1
-                )
-            )
-        }
+        )
         customer.reservation.add(savedReservation)
+        userRepository.save(customer)
         return savedReservation
     }
 
     fun deleteReservation(id: Long) {
-        val reservation = reservationRepository.findByIdOrNull(id) ?: throw Exception()
+        val reservation = reservationRepository.findByIdOrNull(id) ?: throw ReservationNotFound("Reservation with id $id is not found")
         reservationRepository.delete(reservation)
     }
 
