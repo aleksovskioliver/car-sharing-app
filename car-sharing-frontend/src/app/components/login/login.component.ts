@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   submitted = false
   errorMessage = ''
@@ -21,9 +21,6 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private auth: AuthService,
     private router: Router) { }
-
-  ngOnInit(): void {
-  }
 
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;

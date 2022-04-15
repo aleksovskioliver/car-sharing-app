@@ -31,7 +31,6 @@ export class ProfileComponent implements OnInit {
 
     this.userService.getUserReservations().subscribe({
       next: data => {
-        console.log(data)
         this.reservations = data
       }
     })

@@ -1,4 +1,4 @@
-<div class="login-form">
+<div class="d-flex flex-column justify-content-center login-form h-75">
     <h1 class="text-center">Log in</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
@@ -24,7 +24,7 @@
             {{ errorMessage }}
         </div>
 
-        <div class="form-group">
+        <div class="form-group mt-2">
             <button type="submit" class="btn btn-primary form-control">Login</button>
         </div>
     </form>
