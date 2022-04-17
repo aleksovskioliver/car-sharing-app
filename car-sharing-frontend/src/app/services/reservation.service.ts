@@ -40,6 +40,13 @@ export class ReservationService {
    )
   }
 
+  removeCustomerFromReservation(id: number) {
+    return this.http.post(`${this.url}/reservation/removeCustomer/${id}`, id).pipe(
+      tap(it => console.log(it)),
+      catchError(error => throwError(() => new Error(error.error)))
+   )
+  }
+
   getReservationById(id: number) {
     return this.http.get<Reservation>(`http://localhost:8080/api/reservation/find/${id}`);
   }

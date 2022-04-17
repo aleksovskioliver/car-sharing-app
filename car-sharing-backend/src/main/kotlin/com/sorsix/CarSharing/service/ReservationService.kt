@@ -65,6 +65,25 @@ class ReservationService(
         return savedReservation
     }
 
+    fun removeCustomerFromReservation(reservationId: Long): Reservation {
+        val reservation = reservationRepository.findByIdOrNull(reservationId) ?: throw ReservationNotFound("Reservation with id $reservationId is not found")
+        val customer = userRepository.findByEmail(SecurityContextHolder.getContext().authentication.name)!!
+        reservation.customers.remove(customer)
+        val savedReservation = reservationRepository.save(
+            Reservation(
+                reservation.id, reservation.driver, reservation.customers,
+                reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
+                reservation.tripCost,
+                if (reservation.availableSeats >=0) ReservationStatus.ACTIVE else ReservationStatus.FINISHED,
+                reservation.availableSeats + 1
+            )
+        )
+        customer.reservation.remove(savedReservation)
+        userRepository.save(customer)
+        return savedReservation
+    }
+
+
     fun deleteReservation(id: Long) {
         val reservation = reservationRepository.findByIdOrNull(id) ?: throw ReservationNotFound("Reservation with id $id is not found")
         reservationRepository.delete(reservation)

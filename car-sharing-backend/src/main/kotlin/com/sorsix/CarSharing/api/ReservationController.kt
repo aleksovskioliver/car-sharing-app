@@ -47,4 +47,14 @@ class ReservationController(private val reservationService: ReservationService) 
         }
         return ResponseEntity.ok().build()
     }
+
+    @PostMapping("/removeCustomer/{id}")
+    fun removeCustomer(@PathVariable id: Long): ResponseEntity<Any> {
+        try {
+            reservationService.removeCustomerFromReservation(id)
+        }catch (e: CustomerAlreadyReserved){
+            return ResponseEntity.badRequest().body(e.message)
+        }
+        return ResponseEntity.ok().build()
+    }
 }

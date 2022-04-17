@@ -44,6 +44,22 @@ export class ReservationComponent implements OnInit {
       this.router.navigateByUrl("/login")
     }
   }
+  unreserved(r: Reservation) {
+    this.errorMessage = '';
+
+    if (this.authService.isLoggedIn()) {
+      
+      this.service.removeCustomerFromReservation(r.id).subscribe({
+        next: () => {
+          r.availableSeats++
+        },
+        error: error => {
+          this.errorMessage = error        }
+      })
+    } else {
+      this.router.navigateByUrl("/login")
+    }
+  }
 
   setMarker(r: Reservation) {
     this.mapService.addMarker(r.pickupLocation.lat, r.pickupLocation.lng);
