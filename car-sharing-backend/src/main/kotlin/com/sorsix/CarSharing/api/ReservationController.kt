@@ -64,4 +64,9 @@ class ReservationController(private val reservationService: ReservationService) 
         }
         return ok().build()
     }
+
+    @DeleteMapping("/delete/{id}")
+    fun deleteReservation(@PathVariable id:Long){
+        reservationService.deleteReservation(id)
+    }
 }

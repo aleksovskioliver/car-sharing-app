@@ -18,10 +18,15 @@
         <div class="d-flex justify-content-between align-items-center">
           <span>Vehicle make: {{r.driver.vehicle?.make}}</span>
           <span>Vehicle model: {{r.driver.vehicle?.model}}</span>
+          <form method="delete">
+            <div>
+              <button class="btn btn-sm btn-outline-danger" type="submit" (click)="deleteReservation(r.id)">DELETE RESERVATION</button>
+            </div>
+          </form>
         </div>
         <div *ngIf="admin">
           <ul>
-            <li *ngFor="let customer of r.customers">{{customer.email}}</li>
+            <li *ngFor="let customer of r.customers">Reserved by: {{customer.firstName}} {{customer.lastName}} {{customer.phoneNumber}}</li>
           </ul>
         </div>
       </div>

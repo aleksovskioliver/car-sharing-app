@@ -58,4 +58,12 @@ export class ReservationService {
   getLocations(): Observable<MyLocation[]> {
     return this.http.get<MyLocation[]>(`${this.url}/location/getLocations`)
   }
+
+  deleteReservation(id: number){
+    return this.http.delete(`${this.url}/reservation/delete/${id}`).pipe(
+      tap(it=>console.log(it)),
+      catchError(error=>throwError(()=>new Error(error.error))
+      )
+    )
+  }
 }
