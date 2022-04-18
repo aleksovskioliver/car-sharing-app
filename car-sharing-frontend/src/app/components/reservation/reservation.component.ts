@@ -13,10 +13,13 @@ import * as moment from 'moment';
 })
 export class ReservationComponent implements OnInit {
 
+  @Input() admin = false;
+  @Input() customer = false;
   @Input() reservations: Reservation[] = []
   p: number = 1;
   errorMessage = '';
   success = false;
+
 
   constructor(
     private router: Router,
@@ -31,14 +34,15 @@ export class ReservationComponent implements OnInit {
     this.success = false;
 
     if (this.authService.isLoggedIn()) {
-      
+
       this.service.addCustomerToReservation(r.id).subscribe({
         next: () => {
           r.availableSeats--
           this.success = true;
         },
         error: error => {
-          this.errorMessage = error        }
+          this.errorMessage = error
+        }
       })
     } else {
       this.router.navigateByUrl("/login")
@@ -48,13 +52,14 @@ export class ReservationComponent implements OnInit {
     this.errorMessage = '';
 
     if (this.authService.isLoggedIn()) {
-      
+
       this.service.removeCustomerFromReservation(r.id).subscribe({
         next: () => {
           r.availableSeats++
         },
         error: error => {
-          this.errorMessage = error        }
+          this.errorMessage = error
+        }
       })
     } else {
       this.router.navigateByUrl("/login")

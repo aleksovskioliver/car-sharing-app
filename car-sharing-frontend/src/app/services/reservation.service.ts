@@ -27,6 +27,10 @@ export class ReservationService {
     }
   }
 
+  getDriverCreatedReservations(): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(`${this.url}/reservation/driver`)
+  }
+
   createReservation(reservation: ReservationDTO) {
     this.http.post(`${this.url}/reservation/create`, reservation).subscribe({
       next: data => console.log(data)

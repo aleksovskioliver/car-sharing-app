@@ -15,8 +15,7 @@ export class DashboardComponent implements OnInit {
     private authService: AuthService,
     private router: Router) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onClick() {
     if (this.authService.isLoggedIn()) {

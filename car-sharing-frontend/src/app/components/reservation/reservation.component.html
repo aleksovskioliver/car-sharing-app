@@ -25,16 +25,21 @@
         <div class="d-flex justify-content-between align-items-center">
           <span>Vehicle make: {{r.driver.vehicle?.make}}</span>
           <span>Vehicle model: {{r.driver.vehicle?.model}}</span>
-          <form (ngSubmit)="reserved(r)" method="post">
-            <div *ngIf="r.status=='ACTIVE'">
+          <form *ngIf="r.status=='ACTIVE' && !admin && !customer" (ngSubmit)="reserved(r)" method="post">
+            <div>
               <button class="btn btn-sm btn-outline-success" type="submit">RESERVE</button>
             </div>
           </form>
-          <form (ngSubmit)="unreserved(r)" method="post">
-            <div >
-              <button class="btn btn-sm btn-outline-success" type="submit">DElETE</button>
+          <form *ngIf="!admin && customer" (ngSubmit)="unreserved(r)" method="post">
+            <div>
+              <button class="btn btn-sm btn-outline-danger" type="submit">CANCEL RESERVATION</button>
             </div>
           </form>
+        </div>
+        <div *ngIf="admin">
+          <ul>
+            <li *ngFor="let customer of r.customers">{{customer.email}}</li>
+          </ul>
         </div>
       </div>
     </div>

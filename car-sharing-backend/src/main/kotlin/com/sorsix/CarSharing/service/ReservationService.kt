@@ -24,12 +24,17 @@ class ReservationService(
         return reservationRepository.findAll()
     }
 
-    fun getActiveReservation(): List<Reservation>{
+    fun getActiveReservation(): List<Reservation> {
         return reservationRepository.findAllByStatus(ReservationStatus.ACTIVE).reversed()
     }
 
     fun getReservationById(id: Long): Reservation {
         return reservationRepository.findByIdOrNull(id) ?: throw ReservationNotFound("Reservation is not created")
+    }
+
+    fun getDriverCreatedReservations(): List<Reservation> {
+        val driver = userRepository.findByEmail(SecurityContextHolder.getContext().authentication.name)
+        return getReservations().filter { r -> r.driver.id == driver?.id }
     }
 
     fun createReservation(newReservationRequest: CreateReservationRequest): Reservation {
@@ -47,16 +52,17 @@ class ReservationService(
     }
 
     fun addCustomerToReservation(reservationId: Long): Reservation {
-        val reservation = reservationRepository.findByIdOrNull(reservationId) ?: throw ReservationNotFound("Reservation with id $reservationId is not found")
+        val reservation = reservationRepository.findByIdOrNull(reservationId)
+            ?: throw ReservationNotFound("Reservation with id $reservationId is not found")
         val customer = userRepository.findByEmail(SecurityContextHolder.getContext().authentication.name)!!
-        if(reservation.customers.contains(customer)) throw CustomerAlreadyReserved("You have already reserved this reservation!")
+        if (reservation.customers.contains(customer)) throw CustomerAlreadyReserved("You have already reserved this reservation!")
         reservation.customers.add(customer)
         val savedReservation = reservationRepository.save(
             Reservation(
                 reservation.id, reservation.driver, reservation.customers,
                 reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
                 reservation.tripCost,
-                if (reservation.availableSeats <=1) ReservationStatus.FINISHED else ReservationStatus.ACTIVE,
+                if (reservation.availableSeats <= 1) ReservationStatus.FINISHED else ReservationStatus.ACTIVE,
                 reservation.availableSeats - 1
             )
         )
@@ -66,7 +72,8 @@ class ReservationService(
     }
 
     fun removeCustomerFromReservation(reservationId: Long): Reservation {
-        val reservation = reservationRepository.findByIdOrNull(reservationId) ?: throw ReservationNotFound("Reservation with id $reservationId is not found")
+        val reservation = reservationRepository.findByIdOrNull(reservationId)
+            ?: throw ReservationNotFound("Reservation with id $reservationId is not found")
         val customer = userRepository.findByEmail(SecurityContextHolder.getContext().authentication.name)!!
         reservation.customers.remove(customer)
         val savedReservation = reservationRepository.save(
@@ -74,7 +81,7 @@ class ReservationService(
                 reservation.id, reservation.driver, reservation.customers,
                 reservation.startTime, reservation.endTime, reservation.pickupLocation, reservation.dropoutLocation,
                 reservation.tripCost,
-                if (reservation.availableSeats >=0) ReservationStatus.ACTIVE else ReservationStatus.FINISHED,
+                if (reservation.availableSeats >= 0) ReservationStatus.ACTIVE else ReservationStatus.FINISHED,
                 reservation.availableSeats + 1
             )
         )
@@ -85,18 +92,21 @@ class ReservationService(
 
 
     fun deleteReservation(id: Long) {
-        val reservation = reservationRepository.findByIdOrNull(id) ?: throw ReservationNotFound("Reservation with id $id is not found")
+        val reservation = reservationRepository.findByIdOrNull(id)
+            ?: throw ReservationNotFound("Reservation with id $id is not found")
         reservationRepository.delete(reservation)
     }
 
     fun filterReservationByPickupLocation(city: String): List<Reservation> {
         val pickupLocation = locationRepository.findByCity(city)
-        return reservationRepository.findAllByPickupLocationAndStatus(pickupLocation,ReservationStatus.ACTIVE).reversed()
+        return reservationRepository.findAllByPickupLocationAndStatus(pickupLocation, ReservationStatus.ACTIVE)
+            .reversed()
     }
 
     fun filterReservationByDropoutLocation(city: String): List<Reservation> {
         val dropoutLocation = locationRepository.findByCity(city)
-        return reservationRepository.findALlByDropoutLocationAndStatus(dropoutLocation,ReservationStatus.ACTIVE).reversed()
+        return reservationRepository.findALlByDropoutLocationAndStatus(dropoutLocation, ReservationStatus.ACTIVE)
+            .reversed()
     }
 
     fun filterReservationByPickupLocationAndDropoutLocation(
@@ -105,6 +115,10 @@ class ReservationService(
     ): List<Reservation> {
         val pickupLocation = locationRepository.findByCity(pickupCity)
         val dropoutLocation = locationRepository.findByCity(dropoutCity)
-        return reservationRepository.findAllByPickupLocationAndDropoutLocationAndStatus(pickupLocation, dropoutLocation,ReservationStatus.ACTIVE).reversed()
+        return reservationRepository.findAllByPickupLocationAndDropoutLocationAndStatus(
+            pickupLocation,
+            dropoutLocation,
+            ReservationStatus.ACTIVE
+        ).reversed()
     }
 }

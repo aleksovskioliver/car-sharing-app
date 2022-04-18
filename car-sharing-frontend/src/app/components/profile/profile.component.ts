@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Reservation } from 'src/app/models/Reservation';
 import { User } from 'src/app/models/User';
+import { ReservationService } from 'src/app/services/reservation.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,9 +13,12 @@ export class ProfileComponent implements OnInit {
 
   user: User | null = null
   reservations: Reservation[] = []
+  driverReservations: Reservation[] = []
   error: string = ''
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private reservationService: ReservationService) { }
 
   ngOnInit(): void {
     this.userService.getUser().subscribe({
@@ -32,6 +36,13 @@ export class ProfileComponent implements OnInit {
     this.userService.getUserReservations().subscribe({
       next: data => {
         this.reservations = data
+      }
+    })
+
+    this.reservationService.getDriverCreatedReservations().subscribe({
+      next: data => {
+        console.log(data)
+        this.driverReservations = data
       }
     })
   }

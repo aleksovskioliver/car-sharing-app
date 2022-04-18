@@ -14,27 +14,34 @@ import org.springframework.web.bind.annotation.*
 class ReservationController(private val reservationService: ReservationService) {
 
     @GetMapping
-    fun getAllReservations(@RequestParam(required = false) pickupCity: String?,
-                           @RequestParam(required = false) dropoutCity:String?)
-    : List<Reservation> {
-        return if (pickupCity != null && (dropoutCity == null || dropoutCity == "")){
+    fun getAllReservations(
+        @RequestParam(required = false) pickupCity: String?,
+        @RequestParam(required = false) dropoutCity: String?
+    )
+            : List<Reservation> {
+        return if (pickupCity != null && (dropoutCity == null || dropoutCity == "")) {
             reservationService.filterReservationByPickupLocation(pickupCity)
-        } else if((pickupCity == null || pickupCity == "") && dropoutCity != null){
+        } else if ((pickupCity == null || pickupCity == "") && dropoutCity != null) {
             reservationService.filterReservationByDropoutLocation(dropoutCity)
-        } else if((pickupCity != null || pickupCity == "") && (dropoutCity != null || dropoutCity == "")){
-            reservationService.filterReservationByPickupLocationAndDropoutLocation(pickupCity,dropoutCity)
-        }else{
+        } else if ((pickupCity != null || pickupCity == "") && (dropoutCity != null || dropoutCity == "")) {
+            reservationService.filterReservationByPickupLocationAndDropoutLocation(pickupCity, dropoutCity)
+        } else {
             reservationService.getActiveReservation()
         }
     }
 
     @GetMapping("/find/{id}")
-    fun getReservationById(@PathVariable id: Long): ResponseEntity<Reservation>{
-        return ResponseEntity.ok(reservationService.getReservationById(id))
+    fun getReservationById(@PathVariable id: Long): ResponseEntity<Reservation> {
+        return ok(reservationService.getReservationById(id))
+    }
+
+    @GetMapping("/driver")
+    fun getDriverCreatedReservations(): ResponseEntity<List<Reservation>> {
+        return ok().body(reservationService.getDriverCreatedReservations())
     }
 
     @PostMapping("/create")
-    fun createReservation(@RequestBody newReservation: CreateReservationRequest){
+    fun createReservation(@RequestBody newReservation: CreateReservationRequest) {
         reservationService.createReservation(newReservation)
     }
 
@@ -42,19 +49,19 @@ class ReservationController(private val reservationService: ReservationService) 
     fun addCustomer(@PathVariable id: Long): ResponseEntity<Any> {
         try {
             reservationService.addCustomerToReservation(id)
-        }catch (e: CustomerAlreadyReserved){
+        } catch (e: CustomerAlreadyReserved) {
             return ResponseEntity.badRequest().body(e.message)
         }
-        return ResponseEntity.ok().build()
+        return ok().build()
     }
 
     @PostMapping("/removeCustomer/{id}")
     fun removeCustomer(@PathVariable id: Long): ResponseEntity<Any> {
         try {
             reservationService.removeCustomerFromReservation(id)
-        }catch (e: CustomerAlreadyReserved){
+        } catch (e: CustomerAlreadyReserved) {
             return ResponseEntity.badRequest().body(e.message)
         }
-        return ResponseEntity.ok().build()
+        return ok().build()
     }
 }
