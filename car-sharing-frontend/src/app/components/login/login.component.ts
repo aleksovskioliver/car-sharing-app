@@ -32,7 +32,9 @@ export class LoginComponent {
 
     if (this.form.valid) {
       this.auth.loginUser(this.form.value).subscribe({
-        next: () => this.router.navigateByUrl("/"),
+        next: () => {          
+          this.router.navigateByUrl("/").then(() => {window.location.reload()})
+        },
         error: error => {
           this.errorMessage = error
         }
