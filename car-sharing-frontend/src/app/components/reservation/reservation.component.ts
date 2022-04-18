@@ -36,6 +36,7 @@ export class ReservationComponent implements OnInit {
         next: () => {
           r.availableSeats--
           this.success = true;
+          window.location.reload();
         },
         error: error => {
           this.errorMessage = error        }
@@ -52,6 +53,7 @@ export class ReservationComponent implements OnInit {
       this.service.removeCustomerFromReservation(r.id).subscribe({
         next: () => {
           r.availableSeats++
+          window.location.reload()
         },
         error: error => {
           this.errorMessage = error        }
