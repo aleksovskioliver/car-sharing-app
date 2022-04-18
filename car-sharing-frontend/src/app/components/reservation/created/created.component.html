@@ -1,14 +1,7 @@
-<div *ngIf="errorMessage !== ''" class="alert alert-danger" role="alert">
-  {{ errorMessage }}
-</div>
-<div *ngIf="success" class="alert alert-success" role="alert">
-  <div>You have successfully reserved your seat.</div>
-  <div>Have a nice trip!</div>
-</div>
 <ul class="list-group">
-  <li *ngFor="let r of reservations | paginate: { id:'pagination2',  itemsPerPage: 3, currentPage: p }"
+  <li *ngFor="let r of reservations | paginate: { id:'pagination1', itemsPerPage: 3, currentPage: p }"
     class="list-group-item page-item border-0">
-    <div class="reservation card" (click)="setMarker(r)">
+    <div class="reservation card">
       <div class="card-header d-flex justify-content-between"
         [ngClass]="r.status == 'ACTIVE' ? 'text-success' : 'text-danger'">
         <span>Seats left: {{ r.availableSeats }}</span>
@@ -25,16 +18,6 @@
         <div class="d-flex justify-content-between align-items-center">
           <span>Vehicle make: {{r.driver.vehicle?.make}}</span>
           <span>Vehicle model: {{r.driver.vehicle?.model}}</span>
-          <form *ngIf="r.status=='ACTIVE' && !admin && !customer" (ngSubmit)="reserved(r)" method="post">
-            <div>
-              <button class="btn btn-sm btn-outline-success" type="submit">RESERVE</button>
-            </div>
-          </form>
-          <form *ngIf="!admin && customer" (ngSubmit)="unreserved(r)" method="post">
-            <div>
-              <button class="btn btn-sm btn-outline-danger" type="submit">CANCEL RESERVATION</button>
-            </div>
-          </form>
         </div>
         <div *ngIf="admin">
           <ul>
@@ -44,5 +27,5 @@
       </div>
     </div>
   </li>
-  <pagination-controls id='pagination2' (pageChange)="p = $event"></pagination-controls>
+  <pagination-controls id='pagination1' (pageChange)="p = $event"></pagination-controls>
 </ul>

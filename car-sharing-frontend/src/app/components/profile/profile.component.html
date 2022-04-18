@@ -28,7 +28,7 @@
         <div *ngIf="user.role.includes('DRIVER')">
             <div class="mt-2">
                 <h5>Created reservations: </h5>
-                <app-reservation [admin]="true" [reservations]="driverReservations"></app-reservation>
+                <app-created [admin]="true" [reservations]="driverReservations"></app-created>
             </div>
         </div>
     </div>

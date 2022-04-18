@@ -22,6 +22,7 @@ import { SearchComponent } from './components/search/search.component';
 import { ReservationFormComponent } from './components/reservation-form/reservation-form.component';
 import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
 import { ProfileComponent } from './components/profile/profile.component';
+import { CreatedComponent } from './components/reservation/created/created.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     PhoneMaskDirective,
     SearchComponent,
     ReservationFormComponent,
-    ProfileComponent
+    ProfileComponent,
+    CreatedComponent
   ],
   imports: [
     BrowserModule,
