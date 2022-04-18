@@ -26,4 +26,9 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>
-<app-reservation *ngIf="!loading" [reservations]="reservations"></app-reservation>
+
+<div *ngIf="reservations.length == 0 && !loading" class="container">
+    <span class="text-muted">There are no active reservations</span>
+</div>
+
+<app-reservation *ngIf="!loading && reservations.length != 0" [reservations]="reservations"></app-reservation>

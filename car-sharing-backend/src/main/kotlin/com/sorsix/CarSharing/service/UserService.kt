@@ -30,14 +30,14 @@ class UserService(
 
     fun getLoggedInUser(): GetUserResponse {
         val username = SecurityContextHolder.getContext().authentication.name
-        return when(val user = getUserByEmail(username)){
+        return when (val user = getUserByEmail(username)) {
             is User -> GetUserResponseSuccess(user)
             else -> GetUserResponseFailed("No user with that email")
         }
     }
 
     fun createUser(newUser: CreateUserRequest): User {
-        if(getUserByEmail(newUser.email) != null) {
+        if (getUserByEmail(newUser.email) != null) {
             throw UserAlreadyExists("User already exists")
         }
 
@@ -48,14 +48,14 @@ class UserService(
             newUser.phoneNumber,
             newUser.email,
             passwordEncoder.encode(newUser.password),
-            if(newUser.role.contains("driver"))
+            if (newUser.role.contains("driver"))
                 Role.ROLE_DRIVER
             else
                 Role.ROLE_CUSTOMER
         )
         logger.info("[{}]", user)
 
-        if(user.role == Role.ROLE_DRIVER)
+        if (user.role == Role.ROLE_DRIVER)
             user.vehicle = vehicleService.createVehicle(newUser.vehicle!!)
 
         return userRepository.save(user)
