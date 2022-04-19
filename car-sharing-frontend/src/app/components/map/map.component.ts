@@ -22,8 +22,8 @@ export class MapComponent implements OnInit{
     zoomControl: false,
     scrollwheel: false,
     disableDoubleClickZoom: true,
-    mapTypeId: 'hybrid',
-    maxZoom: 15,
+    mapTypeId: 'roadmap',
+    maxZoom: 16,
     minZoom: 8,
   }
   markers: NewType[] = this.service.markers;

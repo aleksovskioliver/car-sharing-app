@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-import { ReactiveFormsModule,FormsModule } from '@angular/forms';
-import {GoogleMapsModule} from '@angular/google-maps'
-import {NgxPaginationModule} from 'ngx-pagination'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { GoogleMapsModule } from '@angular/google-maps'
+import { NgxPaginationModule } from 'ngx-pagination'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -51,7 +51,7 @@ import { UpdateComponent } from './update/update.component';
     FormsModule,
     NgxPaginationModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

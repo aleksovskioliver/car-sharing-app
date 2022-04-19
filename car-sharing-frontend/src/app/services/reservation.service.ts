@@ -41,14 +41,14 @@ export class ReservationService {
     return this.http.post(`${this.url}/reservation/addCustomer/${id}`, id).pipe(
       tap(it => console.log(it)),
       catchError(error => throwError(() => new Error(error.error)))
-   )
+    )
   }
 
   removeCustomerFromReservation(id: number) {
     return this.http.post(`${this.url}/reservation/removeCustomer/${id}`, id).pipe(
       tap(it => console.log(it)),
       catchError(error => throwError(() => new Error(error.error)))
-   )
+    )
   }
 
   getReservationById(id: number) {
@@ -59,10 +59,10 @@ export class ReservationService {
     return this.http.get<MyLocation[]>(`${this.url}/location/getLocations`)
   }
 
-  deleteReservation(id: number){
+  deleteReservation(id: number) {
     return this.http.delete(`${this.url}/reservation/delete/${id}`).pipe(
-      tap(it=>console.log(it)),
-      catchError(error=>throwError(()=>new Error(error.error))
+      tap(it => console.log(it)),
+      catchError(error => throwError(() => new Error(error.error))
       )
     )
   }
