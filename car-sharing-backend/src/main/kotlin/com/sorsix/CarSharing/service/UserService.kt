@@ -4,16 +4,18 @@ import com.sorsix.CarSharing.api.request.CreateUserRequest
 import com.sorsix.CarSharing.api.response.GetUserResponse
 import com.sorsix.CarSharing.api.response.GetUserResponseFailed
 import com.sorsix.CarSharing.api.response.GetUserResponseSuccess
-import com.sorsix.CarSharing.domain.Reservation
 import com.sorsix.CarSharing.domain.Role
 import com.sorsix.CarSharing.domain.User
 import com.sorsix.CarSharing.domain.exception.UserAlreadyExists
+import com.sorsix.CarSharing.domain.exception.UserNotFoundException
 import com.sorsix.CarSharing.repository.UserRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserService(
@@ -23,6 +25,10 @@ class UserService(
 ) {
 
     val logger: Logger = LoggerFactory.getLogger(UserService::class.java)
+
+    fun findUserById(id: Long): User {
+        return userRepository.findByIdOrNull(id) ?: throw UserNotFoundException("User with id $id is not found.")
+    }
 
     fun getUserByEmail(email: String): User? {
         return userRepository.findByEmail(email)
@@ -34,6 +40,12 @@ class UserService(
             is User -> GetUserResponseSuccess(user)
             else -> GetUserResponseFailed("No user with that email")
         }
+    }
+
+
+    @Transactional
+    fun updateUserById(id: Long, user: CreateUserRequest){
+        userRepository.updateUser(id,user.firstName,user.lastName,user.phoneNumber)
     }
 
     fun createUser(newUser: CreateUserRequest): User {

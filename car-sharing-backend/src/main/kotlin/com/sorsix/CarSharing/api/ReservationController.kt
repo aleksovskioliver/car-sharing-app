@@ -2,7 +2,9 @@ package com.sorsix.CarSharing.api
 
 import com.sorsix.CarSharing.api.request.CreateReservationRequest
 import com.sorsix.CarSharing.domain.Reservation
-import com.sorsix.CarSharing.domain.exception.CustomerAlreadyReserved
+import com.sorsix.CarSharing.domain.exception.CustomerAlreadyReservedException
+import com.sorsix.CarSharing.domain.exception.CustomerIsNotInReservationException
+import com.sorsix.CarSharing.domain.exception.ReservationNotFound
 import com.sorsix.CarSharing.service.ReservationService
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.ok
@@ -47,26 +49,28 @@ class ReservationController(private val reservationService: ReservationService) 
 
     @PostMapping("/addCustomer/{id}")
     fun addCustomer(@PathVariable id: Long): ResponseEntity<Any> {
-        try {
-            reservationService.addCustomerToReservation(id)
-        } catch (e: CustomerAlreadyReserved) {
-            return ResponseEntity.badRequest().body(e.message)
+        return try {
+            ok().body(reservationService.addCustomerToReservation(id))
+        } catch (e: CustomerAlreadyReservedException) {
+            ResponseEntity.badRequest().body(e.message)
         }
-        return ok().build()
     }
 
     @PostMapping("/removeCustomer/{id}")
     fun removeCustomer(@PathVariable id: Long): ResponseEntity<Any> {
-        try {
-            reservationService.removeCustomerFromReservation(id)
-        } catch (e: CustomerAlreadyReserved) {
-            return ResponseEntity.badRequest().body(e.message)
+        return try {
+            ok().body(reservationService.removeCustomerFromReservation(id))
+        } catch (e: CustomerIsNotInReservationException) {
+            ResponseEntity.badRequest().body(e.message)
         }
-        return ok().build()
     }
 
     @DeleteMapping("/delete/{id}")
-    fun deleteReservation(@PathVariable id:Long){
-        reservationService.deleteReservation(id)
+    fun deleteReservation(@PathVariable id:Long): ResponseEntity<Any>{
+        return try {
+            ok().body(reservationService.deleteReservation(id))
+        }catch (e: ReservationNotFound){
+            ResponseEntity.badRequest().body(e.message)
+        }
     }
 }

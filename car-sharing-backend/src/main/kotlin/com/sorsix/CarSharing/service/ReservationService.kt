@@ -2,7 +2,7 @@ package com.sorsix.CarSharing.service
 
 import com.sorsix.CarSharing.api.request.CreateReservationRequest
 import com.sorsix.CarSharing.domain.*
-import com.sorsix.CarSharing.domain.exception.CustomerAlreadyReserved
+import com.sorsix.CarSharing.domain.exception.CustomerAlreadyReservedException
 import com.sorsix.CarSharing.domain.exception.ReservationNotFound
 import com.sorsix.CarSharing.repository.LocationRepository
 import com.sorsix.CarSharing.repository.UserRepository
@@ -55,7 +55,7 @@ class ReservationService(
         val reservation = reservationRepository.findByIdOrNull(reservationId)
             ?: throw ReservationNotFound("Reservation with id $reservationId is not found")
         val customer = userRepository.findByEmail(SecurityContextHolder.getContext().authentication.name)!!
-        if (reservation.customers.contains(customer)) throw CustomerAlreadyReserved("You have already reserved this reservation!")
+        if (reservation.customers.contains(customer)) throw CustomerAlreadyReservedException("You have already reserved this reservation!")
         reservation.customers.add(customer)
         val savedReservation = reservationRepository.save(
             Reservation(

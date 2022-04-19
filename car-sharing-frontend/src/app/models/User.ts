@@ -2,6 +2,7 @@ import { Reservation } from "./Reservation";
 import { Vehicle } from "./Vehicle";
 
 export interface User {
+    id: number
     firstName: string;
     lastName: string;
     phoneNumber: string;

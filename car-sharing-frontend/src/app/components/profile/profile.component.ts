@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Reservation } from 'src/app/models/Reservation';
 import { User } from 'src/app/models/User';
 import { ReservationService } from 'src/app/services/reservation.service';
@@ -18,7 +19,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private reservationService: ReservationService) { }
+    private reservationService: ReservationService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.userService.getUser().subscribe({
@@ -45,6 +47,10 @@ export class ProfileComponent implements OnInit {
         this.driverReservations = data
       }
     })
+  }
+
+  updateUser(id: number){
+    this.router.navigate(['update',id])
   }
 
 }

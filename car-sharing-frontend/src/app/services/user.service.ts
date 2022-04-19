@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GetUserResponse } from '../models/GetUserResponse';
 import { Reservation } from '../models/Reservation';
+import { User } from '../models/User';
+import { UserDTO } from '../models/UserDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,14 @@ export class UserService {
 
   getUserReservations(): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${this.url}/reservations`)
+  }
+
+  getUserById(id: number): Observable<User>{
+    return this.http.get<User>(`${this.url}/${id}`)
+  }
+
+  updateUser(id: number, user: UserDTO): Observable<UserDTO>{
+    return this.http.put<UserDTO>(`http://localhost:8080/api/user/update/${id}`, user);
   }
 
 }

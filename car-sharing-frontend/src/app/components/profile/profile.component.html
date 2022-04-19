@@ -14,6 +14,9 @@
                             <p class="text-muted font-size-sm mt-1 mb-0">Email: {{user.email}}</p>
                             <p class="text-muted font-size-sm m-0">Phone: {{user.phoneNumber}}</p>
                         </div>
+                        <div>
+                            <button (click)="updateUser(user.id)" class="btn btn-warning">UPDATE</button>
+                        </div>
                     </div>
                 </div>
             </div>

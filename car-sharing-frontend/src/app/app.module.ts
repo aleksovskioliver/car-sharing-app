@@ -23,6 +23,7 @@ import { ReservationFormComponent } from './components/reservation-form/reservat
 import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { CreatedComponent } from './components/reservation/created/created.component';
+import { UpdateComponent } from './update/update.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CreatedComponent } from './components/reservation/created/created.compo
     SearchComponent,
     ReservationFormComponent,
     ProfileComponent,
-    CreatedComponent
+    CreatedComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,

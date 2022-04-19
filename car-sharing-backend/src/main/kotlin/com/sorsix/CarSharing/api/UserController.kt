@@ -5,6 +5,7 @@ import com.sorsix.CarSharing.api.response.GetUserResponse
 import com.sorsix.CarSharing.api.response.GetUserResponseFailed
 import com.sorsix.CarSharing.api.response.GetUserResponseSuccess
 import com.sorsix.CarSharing.domain.Reservation
+import com.sorsix.CarSharing.domain.User
 import com.sorsix.CarSharing.domain.exception.UserAlreadyExists
 import com.sorsix.CarSharing.domain.exception.UserNotFoundException
 import com.sorsix.CarSharing.service.UserService
@@ -23,6 +24,16 @@ class UserController(private val userService: UserService) {
         } catch (exception: UserAlreadyExists) {
             ResponseEntity.badRequest().body(exception.message)
         }
+    }
+
+    @GetMapping("/{id}")
+    fun findUserById(@PathVariable id: Long): User {
+        return userService.findUserById(id)
+    }
+
+    @PutMapping ("/update/{id}")
+    fun updateUserById(@PathVariable id: Long, @RequestBody user: CreateUserRequest){
+         userService.updateUserById(id,user)
     }
 
     @GetMapping("/get")
