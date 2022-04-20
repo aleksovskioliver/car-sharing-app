@@ -93,15 +93,15 @@
                     <h4 class="text-center">Enter vehicle</h4>
 
                     <div class="form-group">
-                        <label>Model</label>
-                        <input type="text" formControlName="model" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f['model'].errors }" />
-                    </div>
-
-                    <div class="form-group">
                         <label>Make</label>
                         <input type="text" formControlName="make" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f['make'].errors }" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Model</label>
+                        <input type="text" formControlName="model" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f['model'].errors }" />
                     </div>
 
                     <div class="form-group">
