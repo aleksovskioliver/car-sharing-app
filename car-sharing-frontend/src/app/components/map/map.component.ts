@@ -16,7 +16,7 @@ export class MapComponent implements OnInit{
 
   constructor(private service: MapService){}
   
-  zoom = 8
+  zoom = 8.5
   center!: google.maps.LatLngLiteral
   options: google.maps.MapOptions = {
     zoomControl: false,
