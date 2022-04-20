@@ -77,6 +77,7 @@ export class RegisterComponent implements OnInit {
       password: data.password,
       role: data.role,
       vehicle: data.role == 'driver' ? {
+        id: 0,
         model: data.model,
         make: data.make,
         seats: data.seats

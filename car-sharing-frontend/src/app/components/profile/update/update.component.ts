@@ -1,9 +1,9 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../models/User';
-import { UserDTO } from '../models/UserDTO';
-import { UserService } from '../services/user.service';
+import { User } from '../../../models/User';
+import { UserDTO } from '../../../models/UserDTO';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-update',
@@ -32,14 +32,13 @@ export class UpdateComponent implements OnInit {
   updateUser(){
 
     this.userService.updateUser(this.id!,this.user!)
-    .subscribe(() => {})
+    .subscribe(() => {
+      this.router.navigate(['/profile']);
+    })
     }
 
   onSubmit(){
     this.updateUser()
-  }
-  gotoList(){
-   this.router.navigate(['/profile']);
   }
 
 }

@@ -53,4 +53,8 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['update',id])
   }
 
+  updateVehicle(id: number){
+    this.router.navigate(['vehicle',id])
+  }
+
 }
