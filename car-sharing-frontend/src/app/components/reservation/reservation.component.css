@@ -4,7 +4,7 @@
 }
 
 .list-group-item {
-    background-color: #e2e8f0;
+    background-color: var(--main-bg-color);
 }
 
 .card {

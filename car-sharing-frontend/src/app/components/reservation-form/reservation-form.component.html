@@ -1,9 +1,9 @@
 <div class="container mt-5">
-    <div class="row custom-wrapper">
-        <h2 class="mb-3 text-center">Create reservation</h2>
+    <div class="card row reservation-form rounded">
+        <h2 class="mb-3 text-center border-bottom">Create reservation</h2>
         <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
-            <div class="d-grid">
-                <select class="custom-select mb-3" (change)="changePickupCity()" formControlName="pickupCity">
+            <div class="mb-4">
+                <select class="form-select" (change)="changePickupCity()" formControlName="pickupCity">
                     <option value="">Choose pickup location</option>
                     <option *ngFor="let city of cities" [ngValue]="city">
                         {{ city.city }}
@@ -15,8 +15,8 @@
                 </div>
             </div>
 
-            <div class="d-grid">
-                <select class="custom-select mb-3" (change)="changeDropoffCity()" formControlName="dropoffCity">
+            <div class="mb-4">
+                <select class="form-select" (change)="changeDropoffCity()" formControlName="dropoffCity">
                     <option value="">Choose dropoff locaiton</option>
                     <option *ngFor="let city of cities" [ngValue]="city">
                         {{ city.city }}
@@ -28,27 +28,27 @@
                 </div>
             </div>
 
-            <div class="d-grid">
-                <input class="mb-3" type="number" formControlName="availableSeats" placeholder="Enter available seats">
+            <div class="mb-4">
+                <input class="form-control" type="number" formControlName="availableSeats" placeholder="Enter available seats">
             </div>
 
-            <div class="d-grid">
-                <span>Enter start time</span>
-                <input class="mb-3" type="datetime-local" formControlName="startTime" placeholder="enter start time">
+            <div class="input-group mb-4">
+                <span class="input-group-text">Start time</span>
+                <input class="form-control" type="datetime-local" formControlName="startTime">
             </div>
 
-            <div class="d-grid">
-                <span>Enter end time</span>
-                <input class="mb-3" type="datetime-local" formControlName="endTime" placeholder="enter start time">
+            <div class="input-group mb-4">
+                <span class="input-group-text">End time</span>
+                <input class="form-control" type="datetime-local" formControlName="endTime">
             </div>
 
-            <div class="d-grid">
-                <span>Price: </span>
-                <input class="mb-3" type="number" formControlName="price">
+            <div class="input-group mb-4">
+                <span class="input-group-text">den</span>
+                <input class="form-control" type="number" formControlName="price" placeholder="Enter price">
             </div>
 
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg btn-block">
+            <div class="form-group">
+                <button type="submit" class="btn btn-dark btn-lg form-control">
                     Create
                 </button>
             </div>
