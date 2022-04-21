@@ -7,7 +7,7 @@
 </div>
 <ul class="list-group">
   <li *ngFor="let r of reservations | paginate: { id:'pagination2',  itemsPerPage: 3, currentPage: p }"
-    class="list-group-item page-item border-0">
+    class="list-group-item page-item border-0 p-2">
     <div class="reservation card" (click)="setMarker(r)">
       <div class="card-header d-flex justify-content-between"
         [ngClass]="r.status == 'ACTIVE' ? 'text-success' : 'text-danger'">

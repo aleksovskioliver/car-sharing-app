@@ -49,6 +49,7 @@ export class ReservationComponent implements OnInit {
       this.router.navigateByUrl("/login")
     }
   }
+
   unreserved(r: Reservation) {
     this.errorMessage = '';
 
