@@ -1,18 +1,18 @@
-<section class="search-sec">
-    <div class="container">
+<section class="search-sec px-2 pt-2">
+    <div class="container p-0">
         <div class="row">
-            <div class="col-lg-6 my-2">
+            <div class="col-lg-6 pe-0">
                 <input (keydown.enter)="getReservations()" [formControl]="searchField" type="search"
-                    class="form-control rounded" placeholder="Enter pickup city...">
+                    class="form-control rounded-0" placeholder="Enter pickup city...">
             </div>
 
-            <div class="col-lg-6 my-2">
+            <div class="col-lg-6 ps-0">
                 <input (keydown.enter)="getReservations()" [formControl]="searchField2" type="search"
-                    class="form-control rounded" placeholder="Enter drop city">
+                    class="form-control rounded-0" placeholder="Enter drop city">
             </div>
 
-            <div class="d-grid mb-2">
-                <button type="button" class="btn wrn-btn" (click)="getReservations()">Search</button>
+            <div>
+                <button type="button" class="btn form-control rounded-0" (click)="getReservations()">Search</button>
             </div>
         </div>
     </div>
