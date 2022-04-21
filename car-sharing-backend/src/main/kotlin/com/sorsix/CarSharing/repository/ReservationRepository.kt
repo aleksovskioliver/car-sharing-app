@@ -5,11 +5,12 @@ import com.sorsix.CarSharing.domain.Reservation
 import com.sorsix.CarSharing.domain.ReservationStatus
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 interface ReservationRepository : JpaRepository<Reservation,Long>{
-    fun findAllByPickupLocationAndStatus(pickupLocation: Location,reservationStatus: ReservationStatus): List<Reservation>
-    fun findALlByDropoutLocationAndStatus(dropoutLocation: Location,reservationStatus: ReservationStatus): List<Reservation>
-    fun findAllByPickupLocationAndDropoutLocationAndStatus(pickupLocation: Location,dropoutLocation: Location,reservationStatus: ReservationStatus): List<Reservation>
-    fun findAllByStatus(reservationStatus: ReservationStatus): List<Reservation>
+    fun findAllByPickupLocationAndStatusAndEndTimeAfter(pickupLocation: Location,reservationStatus: ReservationStatus,endTime: LocalDateTime): List<Reservation>
+    fun findALlByDropoutLocationAndStatusAndEndTimeAfter(dropoutLocation: Location,reservationStatus: ReservationStatus,endTime: LocalDateTime): List<Reservation>
+    fun findAllByPickupLocationAndDropoutLocationAndStatusAndEndTimeAfter(pickupLocation: Location,dropoutLocation: Location,reservationStatus: ReservationStatus,endTime: LocalDateTime): List<Reservation>
+    fun findAllByStatusAndEndTimeAfter(reservationStatus: ReservationStatus,endTime: LocalDateTime): List<Reservation>
 }

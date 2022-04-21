@@ -25,7 +25,7 @@ class ReservationService(
     }
 
     fun getActiveReservation(): List<Reservation> {
-        return reservationRepository.findAllByStatus(ReservationStatus.ACTIVE).reversed()
+        return reservationRepository.findAllByStatusAndEndTimeAfter(ReservationStatus.ACTIVE, LocalDateTime.now()).reversed()
     }
 
     fun getReservationById(id: Long): Reservation {
@@ -99,13 +99,14 @@ class ReservationService(
 
     fun filterReservationByPickupLocation(city: String): List<Reservation> {
         val pickupLocation = locationRepository.findByCity(city)
-        return reservationRepository.findAllByPickupLocationAndStatus(pickupLocation, ReservationStatus.ACTIVE)
+        return reservationRepository.findAllByPickupLocationAndStatusAndEndTimeAfter(pickupLocation, ReservationStatus.ACTIVE,LocalDateTime.now())
             .reversed()
     }
 
     fun filterReservationByDropoutLocation(city: String): List<Reservation> {
         val dropoutLocation = locationRepository.findByCity(city)
-        return reservationRepository.findALlByDropoutLocationAndStatus(dropoutLocation, ReservationStatus.ACTIVE)
+        return reservationRepository.findALlByDropoutLocationAndStatusAndEndTimeAfter(dropoutLocation, ReservationStatus.ACTIVE,
+            LocalDateTime.now())
             .reversed()
     }
 
@@ -115,10 +116,11 @@ class ReservationService(
     ): List<Reservation> {
         val pickupLocation = locationRepository.findByCity(pickupCity)
         val dropoutLocation = locationRepository.findByCity(dropoutCity)
-        return reservationRepository.findAllByPickupLocationAndDropoutLocationAndStatus(
+        return reservationRepository.findAllByPickupLocationAndDropoutLocationAndStatusAndEndTimeAfter(
             pickupLocation,
             dropoutLocation,
-            ReservationStatus.ACTIVE
+            ReservationStatus.ACTIVE,
+            LocalDateTime.now()
         ).reversed()
     }
 }

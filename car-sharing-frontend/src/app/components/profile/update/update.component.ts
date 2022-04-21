@@ -1,7 +1,5 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../../../models/User';
 import { UserDTO } from '../../../models/UserDTO';
 import { UserService } from '../../../services/user.service';
 
@@ -30,7 +28,6 @@ export class UpdateComponent implements OnInit {
    }
 
   updateUser(){
-
     this.userService.updateUser(this.id!,this.user!)
     .subscribe(() => {
       this.router.navigate(['/profile']);
