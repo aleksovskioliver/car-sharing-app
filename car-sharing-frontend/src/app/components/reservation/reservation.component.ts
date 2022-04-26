@@ -78,4 +78,8 @@ export class ReservationComponent implements OnInit {
     const date = moment(time)
     return date.format("LLL")
   }
+
+  isExpired(r: Reservation): boolean {
+    return moment(r.endTime).isBefore(moment())
+  }
 }
