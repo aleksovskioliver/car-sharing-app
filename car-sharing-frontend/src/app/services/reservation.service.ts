@@ -4,6 +4,7 @@ import { Reservation } from '../models/Reservation';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { MyLocation } from '../models/MyLocation';
 import { ReservationDTO } from '../models/ReservationDTO';
+import { ReservationUpdateDTO } from '../models/ReservationUpdateDTO';
 
 
 @Injectable({
@@ -51,7 +52,7 @@ export class ReservationService {
     )
   }
 
-  getReservationById(id: number) {
+  getReservationById(id: number): Observable<Reservation>{
     return this.http.get<Reservation>(`http://localhost:8080/api/reservation/find/${id}`);
   }
 
@@ -65,5 +66,9 @@ export class ReservationService {
       catchError(error => throwError(() => new Error(error.error))
       )
     )
+  }
+
+  updateReservation(id: number, reservation: ReservationUpdateDTO){
+    return this.http.put(`http://localhost:8080/api/reservation/update/${id}`, reservation);
   }
 }

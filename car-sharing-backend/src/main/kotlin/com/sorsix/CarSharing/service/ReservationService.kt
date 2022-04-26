@@ -1,6 +1,7 @@
 package com.sorsix.CarSharing.service
 
 import com.sorsix.CarSharing.api.request.CreateReservationRequest
+import com.sorsix.CarSharing.api.request.UpdateReservationRequest
 import com.sorsix.CarSharing.domain.*
 import com.sorsix.CarSharing.domain.exception.CustomerAlreadyReservedException
 import com.sorsix.CarSharing.domain.exception.ReservationNotFound
@@ -10,6 +11,7 @@ import com.sorsix.CarSharing.repository.ReservationRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -122,5 +124,12 @@ class ReservationService(
             ReservationStatus.ACTIVE,
             LocalDateTime.now()
         ).reversed()
+    }
+
+    @Transactional
+    fun updateReservationById(id: Long, reservation: UpdateReservationRequest){
+        val startTime = LocalDateTime.parse(reservation.startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        val endTime = LocalDateTime.parse(reservation.endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        reservationRepository.updateReservation(id,startTime,endTime,reservation.tripCost)
     }
 }

@@ -1,6 +1,7 @@
 package com.sorsix.CarSharing.api
 
 import com.sorsix.CarSharing.api.request.CreateReservationRequest
+import com.sorsix.CarSharing.api.request.UpdateReservationRequest
 import com.sorsix.CarSharing.domain.Reservation
 import com.sorsix.CarSharing.domain.exception.CustomerAlreadyReservedException
 import com.sorsix.CarSharing.domain.exception.CustomerIsNotInReservationException
@@ -69,6 +70,15 @@ class ReservationController(private val reservationService: ReservationService) 
     fun deleteReservation(@PathVariable id:Long): ResponseEntity<Any>{
         return try {
             ok().body(reservationService.deleteReservation(id))
+        }catch (e: ReservationNotFound){
+            ResponseEntity.badRequest().body(e.message)
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    fun updateReservation(@PathVariable id: Long,@RequestBody reservation: UpdateReservationRequest): ResponseEntity<Any>{
+        return try {
+            ok().body(reservationService.updateReservationById(id,reservation))
         }catch (e: ReservationNotFound){
             ResponseEntity.badRequest().body(e.message)
         }

@@ -25,14 +25,14 @@ export class UpdateComponent implements OnInit {
     .subscribe({
       next: (data)=> this.user = data
     })
-   }
+  }
 
   updateUser(){
     this.userService.updateUser(this.id!,this.user!)
     .subscribe(() => {
       this.router.navigate(['/profile']);
     })
-    }
+  }
 
   onSubmit(){
     this.updateUser()

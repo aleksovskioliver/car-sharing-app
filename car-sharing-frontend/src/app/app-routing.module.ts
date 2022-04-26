@@ -8,6 +8,8 @@ import { ReservationComponent } from './components/reservation/reservation.compo
 import { SearchComponent } from './components/search/search.component';
 import { UpdateComponent } from './components/profile/update/update.component';
 import { VehicleUpdateComponent } from './components/profile/vehicle-update/vehicle-update.component';
+import { UpdateFormComponent } from './components/reservation-form/update-form/update-form.component';
+
 
 const routes: Routes = [
   { path: "home", component: DashboardComponent },
@@ -18,6 +20,7 @@ const routes: Routes = [
   { path: "search", component: SearchComponent },
   { path: "vehicle/:id", component: VehicleUpdateComponent},
   { path: "update/:id", component: UpdateComponent},
+  { path: "reservation/update/:id",component: UpdateFormComponent},
   { path: "", redirectTo: "home", pathMatch: "full" },
 
 ];

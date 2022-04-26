@@ -25,6 +25,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { CreatedComponent } from './components/reservation/created/created.component';
 import { UpdateComponent } from './components/profile/update/update.component';
 import { VehicleUpdateComponent } from './components/profile/vehicle-update/vehicle-update.component';
+import { UpdateFormComponent } from './components/reservation-form/update-form/update-form.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { VehicleUpdateComponent } from './components/profile/vehicle-update/vehi
     ProfileComponent,
     CreatedComponent,
     UpdateComponent,
-    VehicleUpdateComponent
+    VehicleUpdateComponent,
+    UpdateFormComponent
   ],
   imports: [
     BrowserModule,
