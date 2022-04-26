@@ -25,6 +25,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { CreatedComponent } from './components/reservation/created/created.component';
 import { UpdateComponent } from './components/profile/update/update.component';
 import { VehicleUpdateComponent } from './components/profile/vehicle-update/vehicle-update.component';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCarSide, faCircleUser, faCoins, faPhone, faRoute, faRightLong } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -51,9 +53,21 @@ import { VehicleUpdateComponent } from './components/profile/vehicle-update/vehi
     ReactiveFormsModule,
     GoogleMapsModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FontAwesomeModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIcons(
+      faCarSide,
+      faCircleUser,
+      faCoins,
+      faPhone,
+      faRoute,
+      faRightLong
+    );
+  }
+}
