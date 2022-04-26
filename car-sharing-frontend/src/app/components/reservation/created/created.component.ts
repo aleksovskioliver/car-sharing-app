@@ -27,12 +27,16 @@ export class CreatedComponent implements OnInit {
     return date.format("LLL")
   }
 
-  deleteReservation(id: number){
-    this.service.deleteReservation(id).subscribe(()=>{window.location.reload()})
+  deleteReservation(id: number) {
+    this.service.deleteReservation(id).subscribe(() => { window.location.reload() })
   }
 
-  updateReservation(id: number){
-      this.router.navigate(['reservation/update',id])
-    } 
+  updateReservation(id: number) {
+    this.router.navigate(['reservation/update', id])
+  }
+
+  isExpired(r: Reservation): boolean {
+    return moment(r.endTime).isBefore(moment())
+  }
 
 }
