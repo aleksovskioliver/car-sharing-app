@@ -1,6 +1,5 @@
 package com.sorsix.CarSharing.service
 
-import com.sorsix.CarSharing.api.request.CreateUserRequest
 import com.sorsix.CarSharing.api.request.CreateVehicleRequest
 import com.sorsix.CarSharing.domain.Vehicle
 import com.sorsix.CarSharing.domain.exception.VehicleNotFound
@@ -28,8 +27,4 @@ class VehicleService(
         vehicleRepository.updateVehicle(id,vehicle.make,vehicle.model,vehicle.seats)
     }
 
-    fun deleteVehicle(id: Long){
-        val vehicle: Vehicle = vehicleRepository.findByIdOrNull(id) ?: throw VehicleNotFound("Vehicle with id $id is not found")
-        vehicleRepository.delete(vehicle)
-    }
 }

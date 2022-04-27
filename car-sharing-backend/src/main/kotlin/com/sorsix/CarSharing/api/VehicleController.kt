@@ -2,7 +2,10 @@ package com.sorsix.CarSharing.api
 
 import com.sorsix.CarSharing.api.request.CreateVehicleRequest
 import com.sorsix.CarSharing.domain.Vehicle
+import com.sorsix.CarSharing.domain.exception.VehicleNotFound
 import com.sorsix.CarSharing.service.VehicleService
+import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.ok
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -20,11 +23,15 @@ class VehicleController(private val vehicleService: VehicleService) {
 
     @GetMapping("/{id}")
     fun getVehicleById(@PathVariable id: Long): Vehicle {
-        return vehicleService.getVehicleById(id);
+        return vehicleService.getVehicleById(id)
     }
 
     @PutMapping("/{id}")
-    fun updateVehicle(@PathVariable id: Long, @RequestBody vehicle: Vehicle){
-        vehicleService.updateUserById(id,vehicle)
+    fun updateVehicle(@PathVariable id: Long, @RequestBody vehicle: Vehicle): ResponseEntity<Any>{
+        return try {
+            ok().body(vehicleService.updateUserById(id,vehicle))
+        }catch (e: VehicleNotFound){
+            ResponseEntity.notFound().build()
+        }
     }
 }

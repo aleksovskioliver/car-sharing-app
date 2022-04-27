@@ -12,16 +12,8 @@ class LocationService(private val locationRepository: LocationRepository) {
         return locationRepository.findAll()
     }
 
-    fun getLocationByCity(city: String): Location{
-        return locationRepository.findByCity(city)
-    }
-
     fun create(newLocation: CreateNewLocation): Location{
         return locationRepository.save(Location(newLocation.city,newLocation.lat,newLocation.lng,newLocation.country))
     }
 
-    fun deleteLocation(city: String){
-        val city: Location = locationRepository.findByCity(city)
-        locationRepository.delete(city)
-    }
 }
