@@ -27,7 +27,7 @@ import { UpdateComponent } from './components/profile/update/update.component';
 import { VehicleUpdateComponent } from './components/profile/vehicle-update/vehicle-update.component';
 import { UpdateFormComponent } from './components/reservation-form/update-form/update-form.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCarSide, faCircleUser, faCoins, faPhone, faRoute, faRightLong } from '@fortawesome/free-solid-svg-icons';
+import { faCarSide, faUserPen, faCircleUser, faCoins, faPhone, faRoute, faRightLong, faCar } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
@@ -69,7 +69,9 @@ export class AppModule {
       faCoins,
       faPhone,
       faRoute,
-      faRightLong
+      faRightLong,
+      faUserPen,
+      faCar
     );
   }
 }

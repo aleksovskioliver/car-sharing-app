@@ -3,9 +3,9 @@
     class="list-group-item page-item border-0">
     <div class="reservation card">
       <div class="card-header d-flex justify-content-between"
-        [ngClass]="!isExpired(r) ? 'text-success' : 'text-danger'">
+        [ngClass]="!isExpired(r) && r.status == 'ACTIVE' ? 'text-success' : 'text-danger'">
         <span>Seats left: {{ r.availableSeats }}</span>
-        <span>{{ isExpired(r) ? 'FINISHED' : 'ACTIVE' }}</span>
+        <span>{{ isExpired(r) || r.status == 'FINISHED' ? 'FINISHED' : 'ACTIVE' }}</span>
       </div>
       <div class="card-body py-2">
         <div class="d-flex align-items-center">

@@ -5,3 +5,8 @@
 .user {
     min-height: 120vh;
 }
+
+.edit-user {
+    position: absolute;
+    right: 10px;
+}
